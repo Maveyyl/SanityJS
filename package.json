@@ -1,0 +1,25 @@
+{
+  "name": "sanityjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sanityjs.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maveyyl/SanityJS.git"
+  },
+  "author": "Maveyyl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maveyyl/SanityJS/issues"
+  },
+  "homepage": "https://github.com/Maveyyl/SanityJS#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1"
+  }
+}
