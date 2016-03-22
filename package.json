@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Maveyyl/SanityJS#readme",
   "devDependencies": {
+    "assert": "^1.3.0",
     "grunt": "^0.4.5",
     "grunt-contrib-concat": "^1.0.0",
     "grunt-contrib-jshint": "^1.0.0",

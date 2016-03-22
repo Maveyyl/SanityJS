@@ -110,15 +110,15 @@
 			}
 		} else {
 			// Deep compare objects.
-			var keys = _.keys(a),
+			var keys = _keys(a),
 				key;
 			length = keys.length;
 			// Ensure that both objects contain the same number of properties before comparing deep equality.
-			if (_.keys(b).length !== length) return false;
+			if (_keys(b).length !== length) return false;
 			while (length--) {
 				// Deep compare each member
 				key = keys[length];
-				if (!(_.has(b, key) && isEqual(a[key], b[key], aStack, bStack))) return false;
+				if (!(_has(b, key) && isEqual(a[key], b[key], aStack, bStack))) return false;
 			}
 		}
 		// Remove the first object from the stack of traversed objects.
@@ -126,7 +126,22 @@
 		bStack.pop();
 		return true;
 	}
-	
+	// Retrieve the names of an object's own properties.
+	// Delegates to **ECMAScript 5**'s native `Object.keys`.
+	function _keys(obj){
+		if (!isObject(obj)) return [];
+		if (Object.keys) return Object.keys(obj);
+		var keys = [];
+		for (var key in obj) if (_has(obj, key)) keys.push(key);
+		// Ahem, IE < 9.
+		// if (hasEnumBug) collectNonEnumProps(obj, keys);
+		return keys;
+	}
+	// Shortcut function for checking if an object has a given property directly
+	// on itself (in other words, not on a prototype).
+	function _has(obj, key) {
+		return obj !== null && Object.prototype.hasOwnProperty.call(obj, key);
+	}
 
 	function error(message, options) {
 		// if options is set, options is object, throw_exception is defined && throw_exception is false
@@ -149,11 +164,12 @@
 	sanityjs.value_check = value_check;
 	
 	function value_check(value, type, name, options ) {
-		if (type !== "undefined" && isUndefined(value))
-			return error("Parameter '" + name + "' is undefined.", options);
-	
 		if ( !isObject(type) ) 
 			type = {type:type};
+			
+		if (type.type !== "undefined" && isUndefined(value) )
+			return error("Parameter '" + name + "' is undefined.", options);
+	
 	
 		// if type is an object, this means it contains more checking rules
 		// type.type 			type of value described as a string

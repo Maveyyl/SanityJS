@@ -1,11 +1,12 @@
 sanityjs.value_check = value_check;
 
 function value_check(value, type, name, options ) {
-	if (type !== "undefined" && isUndefined(value))
-		return error("Parameter '" + name + "' is undefined.", options);
-
 	if ( !isObject(type) ) 
 		type = {type:type};
+		
+	if (type.type !== "undefined" && isUndefined(value) )
+		return error("Parameter '" + name + "' is undefined.", options);
+
 
 	// if type is an object, this means it contains more checking rules
 	// type.type 			type of value described as a string
