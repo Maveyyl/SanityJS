@@ -7,7 +7,7 @@
 * boolean = value_check(value, type [, name [, options]] ) 
 
 #### a) arguments_check
-boolean = arguments_check(argument_types [, options]) 
+boolean = arguments_check(argument_types [, options])  
 A function allowing a simple and quick way to check a function argument's type
 ```javascript
 function foo(arg1, arg2, arg3){
