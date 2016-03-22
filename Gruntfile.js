@@ -1,7 +1,11 @@
 module.exports = function(grunt) {
 
 	var src_files = [
-		// "src/....js"
+		"src/utils.js",
+		"src/error.js",
+		"src/value_check.js",
+		"src/object_check.js",
+		"src/arguments_check.js"
 	];
 	var concat_files = [].concat(
 		"src/concat/header.js",

@@ -1,0 +1,1 @@
+sanityjs = require('./sanityjs.js');
