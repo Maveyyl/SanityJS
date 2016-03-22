@@ -37,7 +37,7 @@ This code checks that the object obj corresponds to the structure given.
 The parameter name will be printed in case of error. While going deeper in the value's structure, it'll be enriched with the name of the attributes and index number of array's elements.
 If first elements of attribute "d" isn't a number, it'll print "obj.d[0]"
 
-#### c= value_check
+#### c) value_check
 boolean = value_check(value, type [, name [, options]] ) 
 ```javascript
 var obj = "hello world!";
