@@ -66,57 +66,35 @@ var r = false;
 // date
 // regexp
 
-// testing types
-structure = [{ "name": "undefined", "type": "undefined" }];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": "boolean" }];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "number", "type": "number" }];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "string", "type": "string" }];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "stringnum", "type": "stringnum" }];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array", "type": "array" }];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object", "type": "object" }];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "function", "type": "function" }];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "error", "type": "error" }];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "date", "type": "date" }];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "regexp", "type": "regexp" }];
-assert( sanityjs.object_check(object, structure, "", options) );
 
+
+
+
+// testing types
+assert( sanityjs.object_check( object["undefined"], { type: "undefined" }, 	"undefined", 	options	) );
+assert( sanityjs.object_check( object["boolean"], 	{ type: "boolean" }, 	"boolean", 		options	) );
+assert( sanityjs.object_check( object["number"], 	{ type: "number" }, 	"number", 		options	) );
+assert( sanityjs.object_check( object["string"], 	{ type: "string" }, 	"string", 		options	) );
+assert( sanityjs.object_check( object["stringnum"], { type: "stringnum" }, 	"stringnum", 	options	) );
+assert( sanityjs.object_check( object["array"], 	{ type: "array" }, 		"array", 		options	) );
+assert( sanityjs.object_check( object["object"], 	{ type: "object" }, 	"object", 		options	) );
+assert( sanityjs.object_check( object["function"], 	{ type: "function" }, 	"function", 	options	) );
+assert( sanityjs.object_check( object["error"], 	{ type: "error" }, 		"error", 		options	) );
+assert( sanityjs.object_check( object["date"], 		{ type: "date" }, 		"date", 		options	) );
+assert( sanityjs.object_check( object["regexp"], 	{ type: "regexp" }, 	"regexp", 		options	) );
 
 // test wrong types
-structure = [{ "name": "boolean", "type": "undefined" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "number", "type": "boolean" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": "number" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": "string" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": "stringnum" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": "array" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": "object" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": "function" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": "error" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": "date" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": "regexp" }];
-assert( !sanityjs.object_check(object, structure, "", options) );
-
-
-
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "undefined"}, 	"boolean", 	options ) );
+assert( !sanityjs.object_check( object["number"], 	{ type: "boolean"}, 	"number", 	options ) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "number"}, 		"boolean", 	options ) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "string"}, 		"boolean", 	options ) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "stringnum"}, 	"boolean", 	options ) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "array"}, 		"boolean", 	options ) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "object"}, 		"boolean", 	options ) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "function"}, 	"boolean", 	options ) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "error"}, 		"boolean", 	options ) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "date"}, 		"boolean", 	options ) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "regexp"}, 		"boolean", 	options ) );
 
 
 
@@ -125,54 +103,31 @@ assert( !sanityjs.object_check(object, structure, "", options) );
 
 
 // testing equality
-structure = [{ "name": "undefined", "type": { "type": "undefined", "equal": undefined } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": { "type": "boolean", "equal": true } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "number", "type": { "type": "number", "equal": 123 } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "string", "type": { "type": "string", "equal": "string" } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "stringnum", "type": { "type": "stringnum", "equal": "123.4" } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array", "type": { "type": "array", "equal": [1,2,3] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object", "type": { "type": "object", "equal": {"a":1,"b":2} } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "function", "type": { "type": "function", "equal": object["function"] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-// structure = [{ "name": "error", "type": { "type": "error", "equal": new Error() } }],
-// r = sanityjs.object_check(object, structure, "", options) ;
-// assert( r );
-structure = [{ "name": "date", "type": { "type": "date", "equal": object["date"] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "regexp", "type": { "type": "regexp", "equal": /./ } }],
-assert( sanityjs.object_check(object, structure, "", options) );
+assert( sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	equal: undefined }, 			"undefined", 	options) );
+assert( sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		equal: true }, 					"boolean", 		options) );
+assert( sanityjs.object_check( object["number"], 		{ type: "number", 		equal: 123 }, 					"number", 		options) );
+assert( sanityjs.object_check( object["string"], 		{ type: "string",		equal: "string" }, 				"string", 		options) );
+assert( sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	equal: "123.4" }, 				"stringnum", 	options) );
+assert( sanityjs.object_check( object["array"], 		{ type: "array", 		equal: [1,2,3] }, 				"array", 		options) );
+assert( sanityjs.object_check( object["object"], 		{ type: "object", 		equal: {"a":1,"b":2} }, 		"object", 		options) );
+assert( sanityjs.object_check( object["function"], 		{ type: "function", 	equal: object["function"] }, 	"function", 	options) );
+// assert( sanityjs.object_check( object["error"], 		{ type: "error", 		equal: new Error() }, 			"error",		options) );
+assert( sanityjs.object_check( object["date"], 			{ type: "date", 		equal: object["date"] }, 		"date", 		options) );
+assert( sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		equal: /./ }, 					"regexp", 		options) );
+
 
 // testing wrong equality
-structure = [{ "name": "undefined", "type": { "type": "undefined", "equal": 123 } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": { "type": "boolean", "equal": false } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "number", "type": { "type": "number", "equal": 1234 } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "string", "type": { "type": "string", "equal": "string2" } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "stringnum", "type": { "type": "stringnum", "equal": "123.45" } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array", "type": { "type": "array", "equal": [1,2,3,4] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object", "type": { "type": "object", "equal": {"a":1,"b":2,"c":3} } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "function", "type": { "type": "function", "equal": function() {} } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-// structure = [{ "name": "error", "type": { "type": "error", "equal": new Error("error") } }],
-// r = !sanityjs.object_check(object, structure, "", options) ;
-// assert( r );
-structure = [{ "name": "date", "type": { "type": "date", "equal": new Date() } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "regexp", "type": { "type": "regexp", "equal": /../ } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
+assert( !sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	equal: 123 }, 					"undefined", 	options) );
+assert( !sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		equal: false }, 				"boolean", 		options) );
+assert( !sanityjs.object_check( object["number"], 		{ type: "number", 		equal: 1234 }, 					"number", 		options) );
+assert( !sanityjs.object_check( object["string"], 		{ type: "string",		equal: "string2" }, 			"string", 		options) );
+assert( !sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	equal: "123.45" }, 				"stringnum", 	options) );
+assert( !sanityjs.object_check( object["array"], 		{ type: "array", 		equal: [1,2,3,4] }, 			"array", 		options) );
+assert( !sanityjs.object_check( object["object"], 		{ type: "object", 		equal: {"a":1,"b":2,"c":3} }, 	"object", 		options) );
+assert( !sanityjs.object_check( object["function"], 	{ type: "function", 	equal: function(){} }, 			"function", 	options) );
+// assert( !sanityjs.object_check( object["error"], 	{ type: "error", 		equal: new Error() }, 			"error",		options) );
+assert( !sanityjs.object_check( object["date"], 		{ type: "date", 		equal: new Date() }, 			"date", 		options) );
+assert( !sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		equal: /../ }, 					"regexp", 		options) );
 
 
 
@@ -184,59 +139,30 @@ assert( !sanityjs.object_check(object, structure, "", options) );
 
 
 // testing non equality
-structure = [{ "name": "undefined", "type": { "type": "undefined", "not_equal": [1,2] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": { "type": "boolean", "not_equal": [false,false] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "number", "type": { "type": "number", "not_equal": [1,2] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "string", "type": { "type": "string", "not_equal": ["s1","s2"] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "stringnum", "type": { "type": "stringnum", "not_equal": ["123.45", "12345"] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array", "type": { "type": "array", "not_equal": [[1,2],[1,2,3,4],[1,1,1]] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object", "type": { "type": "object", "not_equal": [{"a":2,"b":2},{"c":3}] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "function", "type": { "type": "function", "not_equal": [function(){}, function(){}] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-// structure = [{ "name": "error", "type": { "type": "error", "not_equal": new Error() } }],
-// r = sanityjs.object_check(object, structure, "", options) ;
-// assert( r );
-structure = [{ "name": "date", "type": { "type": "date", "not_equal": [new Date(), new Date()]} }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "regexp", "type": { "type": "regexp", "not_equal": [/../,/.../] } }],
-assert( sanityjs.object_check(object, structure, "", options) );
+assert( sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	not_equal: [1,2] }, 						"undefined", 	options) );
+assert( sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		not_equal: [false,false] }, 				"boolean", 		options) );
+assert( sanityjs.object_check( object["number"], 		{ type: "number", 		not_equal: [1,2] }, 						"number", 		options) );
+assert( sanityjs.object_check( object["string"], 		{ type: "string",		not_equal: ["s1","s2"] }, 					"string", 		options) );
+assert( sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	not_equal: ["123.45", "12345"] }, 			"stringnum", 	options) );
+assert( sanityjs.object_check( object["array"], 		{ type: "array", 		not_equal: [[1,2],[1,2,3,4],[1,1,1]] }, 	"array", 		options) );
+assert( sanityjs.object_check( object["object"], 		{ type: "object", 		not_equal: [{"a":2,"b":2},{"c":3}] }, 		"object", 		options) );
+assert( sanityjs.object_check( object["function"], 		{ type: "function", 	not_equal: [function(){}, function(){}] }, 	"function", 	options) );
+// assert( sanityjs.object_check( object["error"], 		{ type: "error", 		not_equal: [new Error(), new Error()] }, 	"error",		options) );
+assert( sanityjs.object_check( object["date"], 			{ type: "date", 		not_equal: [new Date(), new Date()] }, 		"date", 		options) );
+assert( sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		not_equal: [/../,/.../] }, 					"regexp", 		options) );
 
 // testing wrong non equality
-structure = [{ "name": "undefined", "type": { "type": "undefined", "not_equal": [123, undefined] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "boolean", "type": { "type": "boolean", "not_equal": [false,true] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "number", "type": { "type": "number", "not_equal": [1234,123] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "string", "type": { "type": "string", "not_equal": ["string2","string"] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "stringnum", "type": { "type": "stringnum", "not_equal": ["123.45","123.4"] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array", "type": { "type": "array", "not_equal": [[1,2,3,4],[1,2,3]] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object", "type": { "type": "object", "not_equal": [{"a":1,"b":2,"c":3}, {"a":1,"b":2}] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "function", "type": { "type": "function", "not_equal": [function() {}, object["function"]] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-// structure = [{ "name": "error", "type": { "type": "error", "not_equal": new Error("error") } }],
-// r = !sanityjs.object_check(object, structure, "", options) ;
-// assert( r );
-structure = [{ "name": "date", "type": { "type": "date", "not_equal": [new Date(), object["date"]] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "regexp", "type": { "type": "regexp", "not_equal": [/../, /./] } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-
-
-
-
-
+assert( !sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	not_equal: [123, undefined] }, 						"undefined", 	options) );
+assert( !sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		not_equal: [false,true] }, 							"boolean", 		options) );
+assert( !sanityjs.object_check( object["number"], 		{ type: "number", 		not_equal: [1234,123] }, 							"number", 		options) );
+assert( !sanityjs.object_check( object["string"], 		{ type: "string",		not_equal: ["string2","string"] }, 					"string", 		options) );
+assert( !sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	not_equal: ["123.45","123.4"] }, 					"stringnum", 	options) );
+assert( !sanityjs.object_check( object["array"], 		{ type: "array", 		not_equal: [[1,2,3,4],[1,2,3]] }, 					"array", 		options) );
+assert( !sanityjs.object_check( object["object"], 		{ type: "object", 		not_equal: [{"a":1}, {"a":1,"b":2}] }, 				"object", 		options) );
+assert( !sanityjs.object_check( object["function"], 	{ type: "function", 	not_equal: [function(){}, object["function"]] }, 	"function", 	options) );
+// assert( !sanityjs.object_check( object["error"], 	{ type: "error", 		not_equal: [new Error(), new Error()] }, 			"error",		options) );
+assert( !sanityjs.object_check( object["date"], 		{ type: "date", 		not_equal: [new Date(), object["date"]] }, 			"date", 		options) );
+assert( !sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		not_equal: [/../, /./] }, 							"regexp", 		options) );
 
 
 
@@ -249,34 +175,14 @@ assert( !sanityjs.object_check(object, structure, "", options) );
 
 
 // testing emptyness
-structure = [{ "name": "string", "type": { "type": "string", "not_empty": true } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array", "type": { "type": "array", "not_empty": true } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object", "type": { "type": "object", "not_empty": true } }],
-assert( sanityjs.object_check(object, structure, "", options) );
+assert( sanityjs.object_check( object["string"], 	{ type: "string", 	not_empty: true }, 	"string", 	options) );
+assert( sanityjs.object_check( object["array"], 	{ type: "array", 	not_empty: true }, 	"array", 	options) );
+assert( sanityjs.object_check( object["object"], 	{ type: "object", 	not_empty: true }, 	"object", 	options) );
 
 // testing wrong emptyness
-structure = [{ "name": "string_empty", "type": { "type": "string", "not_empty": true } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_empty", "type": { "type": "array", "not_empty": true } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_empty", "type": { "type": "object", "not_empty": true } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+assert( !sanityjs.object_check( object["string_empty"], 	{ type: "string", 	not_empty: true }, 	"string_empty", 	options) );
+assert( !sanityjs.object_check( object["array_empty"], 		{ type: "array", 	not_empty: true }, 	"array_empty", 		options) );
+assert( !sanityjs.object_check( object["object_empty"], 	{ type: "object", 	not_empty: true }, 	"object_empty", 	options) );
 
 
 
@@ -285,17 +191,12 @@ assert( !sanityjs.object_check(object, structure, "", options) );
 
 
 // testing length
-structure = [{ "name": "string", "type": { "type": "string", "length": 6 } }],
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array", "type": { "type": "array", "length":  3 } }],
-assert( sanityjs.object_check(object, structure, "", options) );
+assert( sanityjs.object_check( object["string"], 	{ type: "string", 	length: 6 }, 	"string", 	options) );
+assert( sanityjs.object_check( object["array"], 	{ type: "array", 	length: 3 }, 	"array", 	options) );
 
 // testing wrong length
-structure = [{ "name": "string", "type": { "type": "string", "length": 1 } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array", "type": { "type": "array", "length":  1 } }],
-assert( !sanityjs.object_check(object, structure, "", options) );
-
+assert( !sanityjs.object_check( object["string"], 	{ type: "string", 	length: 1 }, 	"string", 	options) );
+assert( !sanityjs.object_check( object["array"], 	{ type: "array", 	length: 1 }, 	"array", 	options) );
 
 
 
@@ -303,17 +204,10 @@ assert( !sanityjs.object_check(object, structure, "", options) );
 
 
 // testing array fullcheck
-structure = [{ "name": "array_fullcheck", "type": { "type": "array", "full_check": true, "sub_type":"number"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
+assert( sanityjs.object_check( object["array_fullcheck"], { type: "array", full_check: true, sub_type: "number" }, "array_fullcheck", options) );
+
 // testing wrong array fullcheck
-structure = [{ "name": "array_wrong_fullcheck", "type": { "type": "array", "full_check": true, "sub_type":"number"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-
-
-
-
-
-
+assert( !sanityjs.object_check( object["array_wrong_fullcheck"], { type: "array", full_check: true, sub_type: "number" }, "array_wrong_fullcheck", options) );
 
 
 
@@ -322,52 +216,32 @@ assert( !sanityjs.object_check(object, structure, "", options) );
 
 
 // testing nesting check in array
-structure = [{ "name": "array_undefined", "type": { "type": "array", "sub_type":"undefined"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"boolean"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_number", "type": { "type": "array", "sub_type":"number"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_string", "type": { "type": "array", "sub_type":"string"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_stringnum", "type": { "type": "array", "sub_type":"stringnum"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_array", "type": { "type": "array", "sub_type":"array"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_object", "type": { "type": "array", "sub_type":"object"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_function", "type": { "type": "array", "sub_type":"function"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_error", "type": { "type": "array", "sub_type":"error"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_date", "type": { "type": "array", "sub_type":"date"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_regexp", "type": { "type": "array", "sub_type":"regexp"}}];
-assert( sanityjs.object_check(object, structure, "", options) );
+assert( sanityjs.object_check( object["array_undefined"], 	{ type: "array", sub_type: "undefined" }, 	"array_undefined", options) );
+assert( sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "boolean" }, 	"array_boolean", options) );
+assert( sanityjs.object_check( object["array_number"], 		{ type: "array", sub_type: "number" }, 		"array_number", options) );
+assert( sanityjs.object_check( object["array_string"], 		{ type: "array", sub_type: "string" }, 		"array_string", options) );
+assert( sanityjs.object_check( object["array_stringnum"], 	{ type: "array", sub_type: "stringnum" }, 	"array_stringnum", options) );
+assert( sanityjs.object_check( object["array_array"], 		{ type: "array", sub_type: "array" }, 		"array_array", options) );
+assert( sanityjs.object_check( object["array_object"], 		{ type: "array", sub_type: "object" }, 		"array_object", options) );
+assert( sanityjs.object_check( object["array_function"], 	{ type: "array", sub_type: "function" }, 	"array_function", options) );
+assert( sanityjs.object_check( object["array_error"], 		{ type: "array", sub_type: "error" }, 		"array_error", options) );
+assert( sanityjs.object_check( object["array_date"], 		{ type: "array", sub_type: "date" }, 		"array_date", options) );
+assert( sanityjs.object_check( object["array_regexp"], 		{ type: "array", sub_type: "regexp" }, 		"array_regexp", options) );
+
 
 // testing wrong nesting check in array
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"undefined"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_number", "type": { "type": "array", "sub_type":"boolean"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"number"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"string"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"stringnum"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"array"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"object"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"function"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"error"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"date"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "array_boolean", "type": { "type": "array", "sub_type":"regexp"}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "undefined" }, 	"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_number"], 	{ type: "array", sub_type: "boolean" }, 	"array_number", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "number" }, 		"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "string" }, 		"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "stringnum" }, 	"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "array" }, 		"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "object" }, 		"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "function" }, 	"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "error" }, 		"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "date" }, 		"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "regexp" }, 		"array_boolean", options) );
+
 
 
 
@@ -377,52 +251,28 @@ assert( !sanityjs.object_check(object, structure, "", options) );
 
 
 // testing nesting check in objects
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"undefined", "type": "undefined"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "boolean"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"number", "type": "number"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"string", "type": "string"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"stringnum", "type": "stringnum"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"array", "type": "array"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"object", "type": "object"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"function", "type": "function"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"error", "type": "error"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"date", "type": "date"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"regexp", "type": "regexp"}]}}];
-assert( sanityjs.object_check(object, structure, "", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "undefined", 	type: "undefined" }] }, 	"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "boolean" }] }, 		"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "number", 	type: "number" }] }, 		"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "string", 	type: "string" }] }, 		"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "stringnum", 	type: "stringnum" }] }, 	"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "array", 		type: "array" }] }, 		"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "object", 	type: "object" }] }, 		"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "function", 	type: "function" }] }, 		"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "error", 		type: "error" }] }, 		"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "date", 		type: "date" }] }, 			"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "regexp", 	type: "regexp" }] }, 		"object", options) );
+
 
 // testing wrong nesting check in objects
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "undefined"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"number", "type": "boolean"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "number"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "string"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "stringnum"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "array"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "object"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "function"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "error"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "date"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-structure = [{ "name": "object_nest", "type": { "type": "object", "structure":[{"name":"boolean", "type": "regexp"}]}}];
-assert( !sanityjs.object_check(object, structure, "", options) );
-
-
-
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "undefined" }] }, 	"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "number", 	type: "boolean" }] }, 		"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "number" }] }, 		"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "string" }] }, 		"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "stringnum" }] }, 	"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "array" }] }, 		"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "object" }] }, 		"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "function" }] }, 		"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "error" }] }, 		"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "date" }] }, 			"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "regexp" }] }, 		"object", options) );

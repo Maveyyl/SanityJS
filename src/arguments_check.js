@@ -16,7 +16,7 @@ function arguments_check(argument_types, options) {
 
 	// verify each argument
 	for (var i = 0; i < argument_types.length; i++) {
-		if (!value_check(caller_arguments[i], argument_types[i], caller_arguments_names[i], options)) return false;
+		if (!object_check(caller_arguments[i], argument_types[i], caller_arguments_names[i], options)) return false;
 	}
 
 	return true;

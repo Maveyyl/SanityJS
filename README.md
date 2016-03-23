@@ -3,8 +3,7 @@
 ## I. API
 ### 1) Main functions
 * boolean = arguments_check(argument_types [, options]) 
-* boolean = object_check(object, structure [, name [, options]])
-* boolean = value_check(value, type [, name [, options]] ) 
+* boolean = object_check(obj, structure [, name [, options]])
 
 #### a) arguments_check
 boolean = arguments_check(argument_types [, options])  
@@ -18,6 +17,12 @@ This code checks that both arg1 and arg2 are defined, and that arg1 is a string 
 
 #### b) object_check
 boolean = object_check(object, structure [, name [, options]])
+```javascript
+var obj = "hello world!";
+var type = "string";
+sanityjs.object_check( obj, type, "obj" );
+```
+This code checks that the object obj is a string
 ```javascript
 var obj = {
 	"a": "hello ",
@@ -37,14 +42,6 @@ This code checks that the object obj corresponds to the structure given.
 The parameter name will be printed in case of error. While going deeper in the value's structure, it'll be enriched with the name of the attributes and index number of array's elements.
 If first elements of attribute "d" isn't a number, it'll print "obj.d[0]"
 
-#### c) value_check
-boolean = value_check(value, type [, name [, options]] ) 
-```javascript
-var obj = "hello world!";
-var type = "string";
-sanityjs.value_check( obj, type, "obj" );
-```
-This code checks that the given value corresponds to the type given
 
 ### 2) Util functions
 Here is the list of available util functions, their name are self-explanatory.
@@ -84,20 +81,19 @@ Flags that can be put in Options:
 * regexp
 
 ### 6) Checkable properties
-Here is the list of all checkable properties to a given value.
+Here is the list of all checkable properties to a given object.
 
-* type : type of the value, described as a string (see CHeckable types)
-* equal : what the value should be equal to
-* not_equal : what the value shouldn't be equal to
-* not_empty : set to true to check if the value is empty
-* length : what should be the length of value if it is an array or a string
-* structure : the structure of value if it is an object
-* sub_type : the type of the elements of value if it is an array
-* full_check : verify the type of all elements of the value if is is an array, check only first element otherwise
+* type : type of the object, described as a string (see CHeckable types)
+* equal : what the object should be equal to
+* not_equal : what the object shouldn't be equal to
+* not_empty : set to true to check if the object is empty
+* length : what should be the length of the object if it is an array or a string
+* structure : the structure of the object if it is an object
+* sub_type : the type of the elements of the object if it is an array
+* full_check : verify the type of all elements of the object if is is an array, check only first element otherwise
 
 
 ## II. TODO
-* Remove the object check function and make value_check more generic
 * A label system allowing constraints between different values properties
 * Allow JSON to be given instead of object for object_check
 * Possibility to have many types to check per value
