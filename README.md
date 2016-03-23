@@ -62,6 +62,8 @@ This code checks that both arg1 and arg2 are defined, and that arg1 is a string 
 Here is the list of available util functions, their name are self-explanatory.
 * boolean = isBoolean( obj )
 * boolean = isNumber( obj )
+* boolean = isInteger( obj )
+* boolean = isFloat( obj )
 * boolean = isString( obj )
 * boolean = isDate( obj )
 * boolean = isRegExp( obj )
@@ -85,6 +87,8 @@ Flags that can be put in Options:
 * undefined
 * boolean
 * number
+* integer
+* float
 * string
 * stringnum
 * array
@@ -153,6 +157,7 @@ function foo(arg1, arg2, arg3){
 
 ## II. Features to come
 * Add integer and float as types
+* Implement invalid states checking for numbers
 * Possibility to check if a value is between a range, with a optional comparison callback
 * Possibility to Check order with a optional comparison callback of an array
 * Possibility to give a JSON to object_check instead of only javascript objects

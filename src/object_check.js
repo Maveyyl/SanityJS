@@ -36,6 +36,12 @@ function object_check(obj, type, name, options ) {
 			// if (r && (!isFinite(obj) || isNaN(obj)))
 			//	return error("Parameter " + name + " is of type " + type + " but is Infinite or NaN.",options);
 			break;
+		case "integer":
+			r = isInteger(obj);
+			break;
+		case "float":
+			r = isFloat(obj);
+			break;
 		case "string":
 			r = isString(obj);
 			if( !r ) break;

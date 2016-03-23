@@ -1,6 +1,8 @@
 
 sanityjs.isBoolean = isBoolean;
 sanityjs.isNumber = isNumber;
+sanityjs.isInteger = isInteger;
+sanityjs.isFloat = isFloat;
 sanityjs.isString = isString;
 sanityjs.isDate = isDate;
 sanityjs.isRegExp = isRegExp;
@@ -16,6 +18,8 @@ sanityjs.isEqual = isEqual;
 
 function isBoolean(obj) {  return obj === true || obj === false || toString.call(obj) === '[object Boolean]'; }
 function isNumber(obj) {   return toString.call(obj) === '[object Number]'; }
+function isInteger(obj) { return  isNumber(obj) && obj % 1 === 0; }
+function isFloat(obj) { return  isNumber(obj) && obj % 1 !== 0; }
 function isString(obj) {    return toString.call(obj) === '[object String]'; }
 function isDate(obj) {    return toString.call(obj) === '[object Date]'; }
 function isRegExp(obj) {    return toString.call(obj) === '[object RegExp]'; }

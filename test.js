@@ -4,50 +4,40 @@ var assert = require("assert");
 
 var options = { "throw_exception": false, "verbose": true };
 var object = {
-	"undefined": undefined,
-	"boolean": true,
-	"number": 123,
-	"string": "string",
-	"stringnum": "123.4",
-	"array": [1,2,3],
-	"object": {"a":1,"b":2},
-	"function": function() {},
-	"error": new Error(),
-	"date": new Date(),
-	"regexp": /./,
+	"undefined": 				undefined,
+	"boolean": 					true,
+	"number": 					123,
+	"integer": 					123,
+	"float": 					123.4,
+	"string": 					"string",
+	"stringnum": 				"123.4",
+	"array": 					[1,2,3],
+	"object": 					{"a":1,"b":2},
+	"function": 				function() {},
+	"error": 					new Error(),
+	"date": 					new Date(),
+	"regexp": 					/./,
 
-	"string_empty":"",
-	"array_empty":[],
-	"object_empty":{},
+	"string_empty": 			"",
+	"array_empty": 				[],
+	"object_empty": 			{},
 
-	"array_fullcheck": [1,2,3],
-	"array_wrong_fullcheck": [1,2,"string"],
+	"array_fullcheck": 			[1,2,3],
+	"array_wrong_fullcheck": 	[1,2,"string"],
 
-	"array_undefined": [undefined,undefined],
-	"array_boolean": [true,false],
-	"array_number": [1,2],
-	"array_string": ["s1", "s2"],
-	"array_stringnum": ["123.4","123.45"],
-	"array_array":[[1,2],[1,2]],
-	"array_object": [{a:1,b:2},{c:3,d:4}],
-	"array_function": [function(){}, function(){}],
-	"array_error": [new Error(), new Error()],
-	"array_date": [new Date(), new Date()],
-	"array_regexp": [/./, /../],
-
-	"object_nest": {
-		"undefined": undefined,
-		"boolean": true,
-		"number": 123,
-		"string": "string",
-		"stringnum": "123.4",
-		"array": [1,2,3],
-		"object": {"a":1,"b":2},
-		"function": function() {},
-		"error": new Error(),
-		"date": new Date(),
-		"regexp": /./,
-	},
+	"array_undefined":  		[undefined,undefined],
+	"array_boolean": 			[true,false],
+	"array_number": 			[1,2],
+	"array_integer": 			[1,2],
+	"array_float": 				[1.2,2.3],
+	"array_string": 			["s1", "s2"],
+	"array_stringnum": 			["123.4","123.45"],
+	"array_array": 				[[1,2],[1,2]],
+	"array_object": 			[{a:1,b:2},{c:3,d:4}],
+	"array_function": 			[function(){}, function(){}],
+	"array_error": 				[new Error(), new Error()],
+	"array_date": 				[new Date(), new Date()],
+	"array_regexp": 			[/./, /../],
 };
 
 
@@ -69,6 +59,8 @@ var object = {
 assert( sanityjs.object_check( object["undefined"], { type: "undefined" }, 	"undefined", 	options	) );
 assert( sanityjs.object_check( object["boolean"], 	{ type: "boolean" }, 	"boolean", 		options	) );
 assert( sanityjs.object_check( object["number"], 	{ type: "number" }, 	"number", 		options	) );
+assert( sanityjs.object_check( object["integer"], 	{ type: "integer" }, 	"integer", 		options	) );
+assert( sanityjs.object_check( object["float"], 	{ type: "float" }, 		"float", 		options	) );
 assert( sanityjs.object_check( object["string"], 	{ type: "string" }, 	"string", 		options	) );
 assert( sanityjs.object_check( object["stringnum"], { type: "stringnum" }, 	"stringnum", 	options	) );
 assert( sanityjs.object_check( object["array"], 	{ type: "array" }, 		"array", 		options	) );
@@ -82,6 +74,8 @@ assert( sanityjs.object_check( object["regexp"], 	{ type: "regexp" }, 	"regexp",
 assert( !sanityjs.object_check( object["boolean"], 	{ type: "undefined"}, 	"boolean", 	options ) );
 assert( !sanityjs.object_check( object["number"], 	{ type: "boolean"}, 	"number", 	options ) );
 assert( !sanityjs.object_check( object["boolean"], 	{ type: "number"}, 		"boolean", 	options ) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "integer" }, 	"boolean", 	options	) );
+assert( !sanityjs.object_check( object["boolean"], 	{ type: "float" }, 		"boolean", 	options	) );
 assert( !sanityjs.object_check( object["boolean"], 	{ type: "string"}, 		"boolean", 	options ) );
 assert( !sanityjs.object_check( object["boolean"], 	{ type: "stringnum"}, 	"boolean", 	options ) );
 assert( !sanityjs.object_check( object["boolean"], 	{ type: "array"}, 		"boolean", 	options ) );
@@ -101,6 +95,8 @@ assert( !sanityjs.object_check( object["boolean"], 	{ type: "regexp"}, 		"boolea
 assert( sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	equal: undefined }, 			"undefined", 	options) );
 assert( sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		equal: true }, 					"boolean", 		options) );
 assert( sanityjs.object_check( object["number"], 		{ type: "number", 		equal: 123 }, 					"number", 		options) );
+assert( sanityjs.object_check( object["integer"], 		{ type: "integer", 		equal: 123 }, 					"integer", 		options) );
+assert( sanityjs.object_check( object["float"], 		{ type: "float", 		equal: 123.4 }, 				"float", 		options) );
 assert( sanityjs.object_check( object["string"], 		{ type: "string",		equal: "string" }, 				"string", 		options) );
 assert( sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	equal: "123.4" }, 				"stringnum", 	options) );
 assert( sanityjs.object_check( object["array"], 		{ type: "array", 		equal: [1,2,3] }, 				"array", 		options) );
@@ -115,6 +111,8 @@ assert( sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		equal: /.
 assert( !sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	equal: 123 }, 					"undefined", 	options) );
 assert( !sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		equal: false }, 				"boolean", 		options) );
 assert( !sanityjs.object_check( object["number"], 		{ type: "number", 		equal: 1234 }, 					"number", 		options) );
+assert( !sanityjs.object_check( object["integer"], 		{ type: "integer", 		equal: 1234 }, 					"integer", 		options) );
+assert( !sanityjs.object_check( object["float"], 		{ type: "float", 		equal: 123.45 }, 				"float", 		options) );
 assert( !sanityjs.object_check( object["string"], 		{ type: "string",		equal: "string2" }, 			"string", 		options) );
 assert( !sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	equal: "123.45" }, 				"stringnum", 	options) );
 assert( !sanityjs.object_check( object["array"], 		{ type: "array", 		equal: [1,2,3,4] }, 			"array", 		options) );
@@ -137,6 +135,8 @@ assert( !sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		equal: /
 assert( sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	not_equal: [1,2] }, 						"undefined", 	options) );
 assert( sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		not_equal: [false,false] }, 				"boolean", 		options) );
 assert( sanityjs.object_check( object["number"], 		{ type: "number", 		not_equal: [1,2] }, 						"number", 		options) );
+assert( sanityjs.object_check( object["integer"], 		{ type: "integer", 		not_equal: [1,2] }, 						"number", 		options) );
+assert( sanityjs.object_check( object["float"], 		{ type: "float", 		not_equal: [1.1,2.2] }, 					"number", 		options) );
 assert( sanityjs.object_check( object["string"], 		{ type: "string",		not_equal: ["s1","s2"] }, 					"string", 		options) );
 assert( sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	not_equal: ["123.45", "12345"] }, 			"stringnum", 	options) );
 assert( sanityjs.object_check( object["array"], 		{ type: "array", 		not_equal: [[1,2],[1,2,3,4],[1,1,1]] }, 	"array", 		options) );
@@ -150,6 +150,8 @@ assert( sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		not_equal
 assert( !sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	not_equal: [123, undefined] }, 						"undefined", 	options) );
 assert( !sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		not_equal: [false,true] }, 							"boolean", 		options) );
 assert( !sanityjs.object_check( object["number"], 		{ type: "number", 		not_equal: [1234,123] }, 							"number", 		options) );
+assert( !sanityjs.object_check( object["integer"], 		{ type: "integer", 		not_equal: [1234,123] }, 							"integer", 		options) );
+assert( !sanityjs.object_check( object["float"], 		{ type: "float", 		not_equal: [123.5,123.4] }, 						"float", 		options) );
 assert( !sanityjs.object_check( object["string"], 		{ type: "string",		not_equal: ["string2","string"] }, 					"string", 		options) );
 assert( !sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	not_equal: ["123.45","123.4"] }, 					"stringnum", 	options) );
 assert( !sanityjs.object_check( object["array"], 		{ type: "array", 		not_equal: [[1,2,3,4],[1,2,3]] }, 					"array", 		options) );
@@ -214,6 +216,8 @@ assert( !sanityjs.object_check( object["array_wrong_fullcheck"], { type: "array"
 assert( sanityjs.object_check( object["array_undefined"], 	{ type: "array", sub_type: "undefined" }, 	"array_undefined", options) );
 assert( sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "boolean" }, 	"array_boolean", options) );
 assert( sanityjs.object_check( object["array_number"], 		{ type: "array", sub_type: "number" }, 		"array_number", options) );
+assert( sanityjs.object_check( object["array_integer"], 	{ type: "array", sub_type: "integer" }, 	"array_integer", options) );
+assert( sanityjs.object_check( object["array_float"], 		{ type: "array", sub_type: "float" }, 		"array_float", options) );
 assert( sanityjs.object_check( object["array_string"], 		{ type: "array", sub_type: "string" }, 		"array_string", options) );
 assert( sanityjs.object_check( object["array_stringnum"], 	{ type: "array", sub_type: "stringnum" }, 	"array_stringnum", options) );
 assert( sanityjs.object_check( object["array_array"], 		{ type: "array", sub_type: "array" }, 		"array_array", options) );
@@ -228,6 +232,8 @@ assert( sanityjs.object_check( object["array_regexp"], 		{ type: "array", sub_ty
 assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "undefined" }, 	"array_boolean", options) );
 assert( !sanityjs.object_check( object["array_number"], 	{ type: "array", sub_type: "boolean" }, 	"array_number", options) );
 assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "number" }, 		"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "integer" }, 	"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "float" }, 		"array_boolean", options) );
 assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "string" }, 		"array_boolean", options) );
 assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "stringnum" }, 	"array_boolean", options) );
 assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "array" }, 		"array_boolean", options) );
@@ -249,6 +255,8 @@ assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_t
 assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "undefined", 	type: "undefined" }] }, 	"object", options) );
 assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "boolean" }] }, 		"object", options) );
 assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "number", 	type: "number" }] }, 		"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "integer", 	type: "integer" }] }, 		"object", options) );
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "float", 		type: "float" }] }, 		"object", options) );
 assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "string", 	type: "string" }] }, 		"object", options) );
 assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "stringnum", 	type: "stringnum" }] }, 	"object", options) );
 assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "array", 		type: "array" }] }, 		"object", options) );
@@ -263,6 +271,8 @@ assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "r
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "undefined" }] }, 	"object", options) );
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "number", 	type: "boolean" }] }, 		"object", options) );
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "number" }] }, 		"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "integer" }] }, 		"object", options) );
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "float" }] }, 		"object", options) );
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "string" }] }, 		"object", options) );
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "stringnum" }] }, 	"object", options) );
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "array" }] }, 		"object", options) );
