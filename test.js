@@ -51,9 +51,6 @@ var object = {
 };
 
 
-var structure = [];
-var r = false;
-
 // undefined
 // boolean
 // number
@@ -65,8 +62,6 @@ var r = false;
 // error
 // date
 // regexp
-
-
 
 
 
