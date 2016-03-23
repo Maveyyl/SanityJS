@@ -11,7 +11,6 @@ The minimalistic type object is a string containing the name of the type, "type_
 The type object can be complicated and describe the types of an object elements or an array elements thanks to attributes called "structure" and "sub_type" that are type object themselves. It is then possible to describe multiple level of nested objects and arrays.
 
 
-
 ### 2) Main functions
 * boolean = object_check(obj, type [, name [, options]])
 * boolean = arguments_check(argument_types [, options]) 
@@ -156,7 +155,6 @@ function foo(arg1, arg2, arg3){
 
 
 ## II. Features to come
-* Add integer and float as types
 * Implement invalid states checking for numbers
 * Possibility to check if a value is between a range, with a optional comparison callback
 * Possibility to Check order with a optional comparison callback of an array
@@ -188,9 +186,13 @@ Once the development is done, run the command "Grunt" in the root folder of the 
 
 ### 2) Testing
 Run  
+```
 node test.js  
+```
 or  
+```
 npm test  
+```
 in the root folder of the module. If there is a problem, an assertion will occure, else some logs will appear and the program will terminate properly.  
   
 New unit test should be added into test.js file
