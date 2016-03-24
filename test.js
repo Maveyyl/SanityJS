@@ -216,6 +216,18 @@ assert( !sanityjs.object_check( object["NaN"], 			{ type: "number" }, 	"NaN", 		
 assert( !sanityjs.object_check( object["Infinity"], 	{ type: "number" }, 	"Infinity", 	options	) );
 
 
+// testing custom function
+var numcheck = function(obj){
+	return obj > 100 && obj < 200;
+};
+var numcheck2 = function(obj){
+	return obj > 0 && obj < 100;
+};
+var cb_message = "is not between 0 and 100";
+assert( sanityjs.object_check( object["number"], 	{ type: "number", cb: numcheck }, 							"number", options ) );
+assert( !sanityjs.object_check( object["number"], 	{ type: "number", cb: numcheck2, cb_message: cb_message }, 	"number", options ) );
+
+
 
 
 // testing nesting check in array

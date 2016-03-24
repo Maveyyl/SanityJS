@@ -3,13 +3,48 @@ SanityJS is a Javascript module that helps checking types of objects and paramet
 
 ## I. API
 ### 1) Describing a type
+#### a) Type object
 In order to check the type of an object or a parameter, it is necessary to describe this type to SanityJS.  
 For that SanityJS must be provided with a type object.  
 
-The minimalistic type object is a string containing the name of the type, "type_name", the different values that can be used here are listed in I.5, or an object of the shape {type:"type_name"}. The second form is useful if the type has to be described more precisely with optional attributes listed in I.6.
+The minimalistic type object is a string containing the name of the type, "type_name" or an object of the shape {type:"type_name"}. The second form is useful if the type has to be described more precisely with optional attributes listed in I.6.
+The different values that can be used as type are listed in I.5.
+Example:
+```javascript
+	var simple_type = "string";
+	var complex_type = { type: "array", not_empty: true };
+```
 
-The type object can be complicated and describe the types of an object elements or an array elements thanks to attributes called "structure" and "sub_type" that are type object themselves. It is then possible to describe multiple level of nested objects and arrays.
+The type object can be complicated and describe the types of elements of an array or an object. This is done thanks to the  attributes "structure" and "sub_type" placed in the type object. It is then possible to describe multiple level of nested objects and arrays.
 
+#### b) Sub Type
+A sub type is a type object, it describes the type of the elements of an array.
+Example:
+```javascript
+	var array = [1;2;3];
+	var sub_type = { type: "number", not_equal: [0] };
+	var array_type = {
+		type: "array",
+		sub_type: sub_type
+	};
+```
+
+#### c) Structure
+A structure describes the attributes of an object. It is an array of objects that has two attributes: "name" and "type".
+The attribute "name" is the name of the attribute in the checked object, and the attribute "type" is the type object of the checked attribute.
+
+Example:
+```javascript
+	var obj = { a: "1",	b: "2" };
+	var structure = [
+		{ name: "a", type: "number" },
+		{ name: "b", type: "number" }
+	];
+	var obj_type = {
+		type: "object",
+		structure: structure
+	};
+```
 
 ### 2) Main functions
 * boolean = object_check(obj, type [, name [, options]])
@@ -35,7 +70,7 @@ var structure = [ // an array to describe an object
 	{ name: "a", type: "string" }, // in this object there's an attribute called "a" that is a string
 	{ name: "b", type: "string" }, // ....
 	{ name: "c", type: "number" },
-	{ name: "d", type: { "type": "array", "sub_type": "number" } }
+	{ name: "d", type: { "type": "array", "sub_type": "number" } } // complex types can be used whenever there's an object type if necessary
 ];
 sanityjs.object_check( obj, structure, "obj" );
 ```
@@ -104,12 +139,20 @@ Here is the list of all checkable properties to a given object, they are attribu
 * equal : 		a value the object should be equal to, does not work with error type
 * not_equal : 	an array of values the object shouldn't be equal to, does not work with error type
 * not_empty : 	set to true to check if the object is empty
+
+* cb :			custom checking callback function that will be called given obj as parameter, returns true if success, returns false if fail.
+* cb_message : 	string that will be logged if cb call fails
+
 * length : 		what should be the length of the object if it is an array or a string
 * full_check : 	verify the type of all elements of the object if is is an array, check only first element otherwise
 
-* structure : 	the structure of the object if it is an object, is a type object itself
+* structure : 	the structure of the object if it is an object, must contain attributes "name" and "type"
 * sub_type : 	the type of the elements of the object if it is an array, is a type object itself
 
+Prototype of callback function
+```javascript
+boolean = function cb(obj, type, name)
+```
 
 ### 7) Examples
 #### a) Verifying simple arguments
@@ -140,13 +183,18 @@ function foo(arg1, arg2, arg3){
 	var today = new Date();
 	var schedule = {
 		date: new Date(),
+		schedule_version = 3;
 		tasks_id: [23,24,26,19]
 	}
+	var cb = function(obj,type,name){
+		return obj >= 2;
+	};
 	var type = {
 		type: "object",
 		structure: [
-			{ type: "date" , equal: today },
-			{ type: "array", sub_type: "number", full_check: true }
+			{ name: "date", type: { type:"date" , equal: today } },
+			{ name: "schedule_version", type: { type:"number", cb: cb, cb_message: "is not superior to 2" } },
+			{ name: "tasks_id" type: { type:"array", sub_type: "number", full_check: true } }
 		]
 	}
 }
@@ -155,7 +203,6 @@ function foo(arg1, arg2, arg3){
 
 
 ## II. Features to come
-* Possibility to check if a value is between a range, with a optional comparison callback
 * Possibility to Check order with a optional comparison callback of an array
 * Possibility to give a JSON to object_check instead of only javascript objects
 * A label system allowing constraints between different object properties

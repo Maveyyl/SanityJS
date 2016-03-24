@@ -177,13 +177,19 @@
 	
 		// if type is an object, this means it contains more checking rules
 		// type.type 			type of obj described as a string
+	
 		// type.equal 			what obj should be equal to
 		// type.not_equal 		what obj shouldn't be equal to
 		// type.not_empty 		obj shouldn't be empty
+	
+		// type.cb				function that will be called given obj as parameter
+		// type.cb_message		string that will be displayed if cb call fails
+	
 		// type.length 			what should be obj's length if obj is an array or a string
+		// type.full_check 		verify the type of all elements of obj if obj is an array, check only first element otherwise
+		
 		// type.structure 		the structure of obj if obj is an object
 		// type.sub_type 		the type of the elements of obj if obj is an array
-		// type.full_check 		verify the type of all elements of obj if obj is an array, check only first element otherwise
 		type.not_empty = type.not_empty || false;
 		type.full_check = type.full_check || false;
 	
@@ -296,8 +302,19 @@
 		// test inequality if asked
 		if (isDefined(type.not_equal) && isArray(type.not_equal) && type.not_equal.length !== 0) {
 			for (i = 0; i < type.not_equal.length; i++) {
-				if (isEqual(obj, type.not_equal[i]))
+				if ( isEqual(obj, type.not_equal[i]) )
 					return error("Parameter '" + name + "' is equal to " + type.not_equal[i] + ", it should not.", options);
+			}
+		}
+	
+		// call cb on obj
+		if( isDefined(type.cb) && isFunction(type.cb) ){
+			r = type.cb(obj, type, name);
+			if( !r ){
+				if( isDefined(type.cb_message) )
+					return error("Parameter '" + name + "' " + type.cb_message, options);
+				else
+					return error("Parameter '" + name + "' failed passing the callback.", options);
 			}
 		}
 	
