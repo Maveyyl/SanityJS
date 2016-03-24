@@ -57,7 +57,6 @@ var object = {
 // regexp
 
 
-
 // testing types
 assert( sanityjs.object_check( object["undefined"], { type: "undefined" }, 	"undefined", 	options	) );
 assert( sanityjs.object_check( object["boolean"], 	{ type: "boolean" }, 	"boolean", 		options	) );
@@ -230,6 +229,8 @@ assert( !sanityjs.object_check( object["number"], 	{ type: "number", cb: numchec
 
 
 
+
+
 // testing nesting check in array
 assert( sanityjs.object_check( object["array_undefined"], 	{ type: "array", sub_type: "undefined" }, 	"array_undefined", options) );
 assert( sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "boolean" }, 	"array_boolean", options) );
@@ -299,3 +300,15 @@ assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "error" }] }, 		"object", options) );
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "date" }] }, 			"object", options) );
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "regexp" }] }, 		"object", options) );
+
+
+
+// testing giving a JSON to object_check
+assert( sanityjs.object_check( JSON.stringify(object), { type: "object", structure: [{ name: "boolean", 	type: "boolean" }] }, 	"object", options) );
+assert( !sanityjs.object_check( JSON.stringify(object), { type: "object", structure: [{ name: "boolean", 	type: "undefined" }] }, 	"object", options) );
+// testing a non parsable string
+assert( !sanityjs.object_check( "string", { type: "object", structure: [{ name: "boolean", 	type: "undefined" }] }, 	"object", options) );
+// testing a string to be a string
+assert( sanityjs.object_check( object['string'], "string", "string", options) );
+// testing a string as another type
+assert( !sanityjs.object_check( object['string'], "boolean", "string", options) );

@@ -53,6 +53,8 @@ Example:
 
 #### a) object_check
 boolean = object_check(object, type [, name [, options]])
+Check that the object or JSON string in the parameter "object" is of the type described by "type".
+
 ```javascript
 var obj = "hello world!";
 var type = "string";
@@ -204,7 +206,6 @@ function foo(arg1, arg2, arg3){
 
 ## II. Features to come
 * Possibility to Check order with a optional comparison callback of an array
-* Possibility to give a JSON to object_check instead of only javascript objects
 * A label system allowing constraints between different object properties
 * Possibility to have many types to check per object
 

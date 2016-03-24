@@ -170,6 +170,12 @@
 	function object_check(obj, type, name, options ) {
 		if ( !isObject(type) ) 
 			type = {type:type};
+	
+		if( isString(obj) && type.type !=="string" && type.type !== "stringnum" ){
+			try{
+				obj = JSON.parse(obj);
+			} catch(e){}
+		}
 			
 		if (type.type !== "undefined" && isUndefined(obj) )
 			return error("Parameter '" + name + "' is undefined.", options);
@@ -187,7 +193,7 @@
 	
 		// type.length 			what should be obj's length if obj is an array or a string
 		// type.full_check 		verify the type of all elements of obj if obj is an array, check only first element otherwise
-		
+	
 		// type.structure 		the structure of obj if obj is an object
 		// type.sub_type 		the type of the elements of obj if obj is an array
 		type.not_empty = type.not_empty || false;
