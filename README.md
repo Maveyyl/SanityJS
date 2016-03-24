@@ -143,7 +143,8 @@ Here is the list of all checkable properties to a given object, they are attribu
 * not_empty : 	set to true to check if the object is empty
 
 * cb :			custom checking callback function that will be called given obj as parameter, returns true if success, returns false if fail.
-* cb_message : 	string that will be logged if cb call fails
+* cb_message : 	string that will be logged if cb call fails, optional.
+* label : 		string used to name the checked object, is useful in order to retrieve the said object during a custom checking callback.
 
 * length : 		what should be the length of the object if it is an array or a string
 * full_check : 	verify the type of all elements of the object if is is an array, check only first element otherwise
@@ -153,7 +154,7 @@ Here is the list of all checkable properties to a given object, they are attribu
 
 Prototype of callback function
 ```javascript
-boolean = function cb(obj, type, name)
+boolean = function cb(obj, type, name, labels)
 ```
 
 ### 7) Examples
@@ -203,10 +204,30 @@ function foo(arg1, arg2, arg3){
 	sanityjs.object_check( schedule, type, "schedule" );
 ```
 
+#### e) Using labels
+In this example we have two arrays of unknown size but we know that they must be of the same size. We're going to use labels and callback function to check this constraint.
+```javascript
+	var obj = {
+		array1 = [ 1, 2, 3],
+		array2 = [ 4, 5, 6]
+	}
+	var cb = function(obj, type, name, labels){
+		return labels['array1'].length === obj.length;
+	};
+	var type = {
+		type: "object",
+		structure: [
+			{ name: "array1", type: { type: "array", label: "array1" } },
+			{ name: "array2", type: { type: "array", cb: cb, cb_message: "is not of same size than array1" } }
+		]
+	}
+}
+	sanityjs.object_check( schedule, type, "schedule" );
+```
+
 
 ## II. Features to come
 * Possibility to Check order with a optional comparison callback of an array
-* A label system allowing constraints between different object properties
 * Possibility to have many types to check per object
 
 The comparison callback would have this shape:

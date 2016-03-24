@@ -312,3 +312,32 @@ assert( !sanityjs.object_check( "string", { type: "object", structure: [{ name: 
 assert( sanityjs.object_check( object['string'], "string", "string", options) );
 // testing a string as another type
 assert( !sanityjs.object_check( object['string'], "boolean", "string", options) );
+
+
+
+// testing labels
+var size_check = function( obj, type, name, labels ){
+	return labels["array1"].length === obj.length;
+};
+structure = {
+	type: "object",
+	structure: [
+		{ name: "array", type: { type: "array", label: "array1"} },
+		{ name: "array", type: { type: "array", cb: size_check } }
+	]
+}
+assert( sanityjs.object_check( object, structure, "object", options) );
+
+structure = {
+	type: "object",
+	structure: [
+		{ name: "array", type: { type: "array", label: "array1"} },
+		{ name: "array_array", type: { type: "array", cb: size_check } }
+	]
+}
+assert( !sanityjs.object_check( object, structure, "object", options) );
+
+
+
+console.log("Test successfully done.");
+process.exit(0);

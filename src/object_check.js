@@ -1,6 +1,7 @@
 sanityjs.object_check = object_check;
 
-function object_check(obj, type, name, options ) {
+function object_check(obj, type, name, options, labels ) {
+
 	if ( !isObject(type) ) 
 		type = {type:type};
 
@@ -23,6 +24,7 @@ function object_check(obj, type, name, options ) {
 
 	// type.cb				function that will be called given obj as parameter
 	// type.cb_message		string that will be displayed if cb call fails
+	// type.label 			label that is used to store and remember this object during the recursion
 
 	// type.length 			what should be obj's length if obj is an array or a string
 	// type.full_check 		verify the type of all elements of obj if obj is an array, check only first element otherwise
@@ -31,6 +33,9 @@ function object_check(obj, type, name, options ) {
 	// type.sub_type 		the type of the elements of obj if obj is an array
 	type.not_empty = type.not_empty || false;
 	type.full_check = type.full_check || false;
+	
+	if( isUndefined( labels ) )
+		labels = {};
 
 
 	var r;
@@ -88,12 +93,12 @@ function object_check(obj, type, name, options ) {
 				// if full_check is set, check all elements of array
 				if ( type.full_check && type.full_check){
 					for (i = 0; i < obj.length; i++){
-						if (!object_check(obj[i], type.sub_type, name+"["+i+"]", options)) return false;
+						if (!object_check(obj[i], type.sub_type, name+"["+i+"]", options, labels)) return false;
 						// else check only the first one
 					}
 				}
 				else
-					if (!object_check(obj[0], type.sub_type, name+"[0]", options)) return false;
+					if (!object_check(obj[0], type.sub_type, name+"[0]", options, labels)) return false;
 			}
 
 			break;
@@ -106,7 +111,7 @@ function object_check(obj, type, name, options ) {
 				// objects are described with an array of objects containing informations and structures of the fields
 				for (i = 0; i < type.structure.length; i++) {
 					// for each field, check obj of the vield
-					if (!object_check(obj[type.structure[i].name], type.structure[i].type, name + "." + type.structure[i].name, options)) return false;
+					if (!object_check(obj[type.structure[i].name], type.structure[i].type, name + "." + type.structure[i].name, options, labels)) return false;
 				}
 			}
 
@@ -148,7 +153,7 @@ function object_check(obj, type, name, options ) {
 
 	// call cb on obj
 	if( isDefined(type.cb) && isFunction(type.cb) ){
-		r = type.cb(obj, type, name);
+		r = type.cb(obj, type, name, labels);
 		if( !r ){
 			if( isDefined(type.cb_message) )
 				return error("Parameter '" + name + "' " + type.cb_message, options);
@@ -157,6 +162,10 @@ function object_check(obj, type, name, options ) {
 		}
 	}
 
+
+	// handling labels
+	if( isDefined(type.label) && isString(type.label) )
+		labels[type.label] = obj;
 
 	return true;
 }
