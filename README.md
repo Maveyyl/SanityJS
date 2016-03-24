@@ -101,8 +101,8 @@ Flags that can be put in Options:
 Here is the list of all checkable properties to a given object, they are attributes of a type object
 
 * type : 		type of the object, described as a string (see CHeckable types)
-* equal : 		what the object should be equal to, does not work with error type
-* not_equal : 	what the object shouldn't be equal to, does not work with error type
+* equal : 		a value the object should be equal to, does not work with error type
+* not_equal : 	an array of values the object shouldn't be equal to, does not work with error type
 * not_empty : 	set to true to check if the object is empty
 * length : 		what should be the length of the object if it is an array or a string
 * full_check : 	verify the type of all elements of the object if is is an array, check only first element otherwise
