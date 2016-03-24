@@ -155,7 +155,6 @@ function foo(arg1, arg2, arg3){
 
 
 ## II. Features to come
-* Implement invalid states checking for numbers
 * Possibility to check if a value is between a range, with a optional comparison callback
 * Possibility to Check order with a optional comparison callback of an array
 * Possibility to give a JSON to object_check instead of only javascript objects

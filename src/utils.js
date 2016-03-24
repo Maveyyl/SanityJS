@@ -17,9 +17,9 @@ sanityjs.isObjectEmpty = isObjectEmpty;
 sanityjs.isEqual = isEqual;
 
 function isBoolean(obj) {  return obj === true || obj === false || toString.call(obj) === '[object Boolean]'; }
-function isNumber(obj) {   return toString.call(obj) === '[object Number]'; }
-function isInteger(obj) { return  isNumber(obj) && obj % 1 === 0; }
-function isFloat(obj) { return  isNumber(obj) && obj % 1 !== 0; }
+function isNumber(obj) {   return toString.call(obj) === '[object Number]'; } // positive for NaN and Infinity
+function isInteger(obj) { return  isNumber(obj) && obj % 1 === 0; } // negative for NaN and Infinity
+function isFloat(obj) { return  isNumber(obj) && obj % 1 !== 0; } // negative for NaN and Infinity
 function isString(obj) {    return toString.call(obj) === '[object String]'; }
 function isDate(obj) {    return toString.call(obj) === '[object Date]'; }
 function isRegExp(obj) {    return toString.call(obj) === '[object RegExp]'; }
