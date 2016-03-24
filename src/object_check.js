@@ -34,10 +34,10 @@ function object_check(obj, type, name, options ) {
 			r = isNumber(obj);
 			if( !r ) break;
 
-			if ( !isFinite(obj) )
-				return error("Parameter " + name + " is of type " + type + " but is Infinite.", options);
 			if ( isNaN(obj) )
 				return error("Parameter " + name + " is NaN.", options);
+			if ( !isFinite(obj) )
+				return error("Parameter " + name + " is of type " + type.type + " but is Infinite.", options);
 			break;
 		case "integer":
 			r = isInteger(obj);

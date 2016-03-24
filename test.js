@@ -25,6 +25,9 @@ var object = {
 	"array_fullcheck": 			[1,2,3],
 	"array_wrong_fullcheck": 	[1,2,"string"],
 
+	"NaN": 						NaN,
+	"Infinity": 				Infinity,
+
 	"array_undefined":  		[undefined,undefined],
 	"array_boolean": 			[true,false],
 	"array_number": 			[1,2],
@@ -208,6 +211,9 @@ assert( !sanityjs.object_check( object["array_wrong_fullcheck"], { type: "array"
 
 
 
+// testing NaN and Infinity
+assert( !sanityjs.object_check( object["NaN"], 			{ type: "number" }, 	"NaN", 			options	) );
+assert( !sanityjs.object_check( object["Infinity"], 	{ type: "number" }, 	"Infinity", 	options	) );
 
 
 
