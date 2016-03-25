@@ -1,6 +1,11 @@
 sanityjs.arguments_check = arguments_check;
 
 function arguments_check(argument_types, options) {
+	if( isUndefined(options) || !isObject(options) )
+		options = {};
+	options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
+	options.verbose = isDefined(options.verbose) ? options.verbose : false; 
+
 	// get caller's arguments
 	caller_arguments = Array.prototype.slice.call(arguments.callee.caller.arguments);
 	// get caller's arguments name

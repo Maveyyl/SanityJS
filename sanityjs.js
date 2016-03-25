@@ -1,4 +1,4 @@
-/*! sanityjs 2016-03-24 */
+/*! sanityjs 2016-03-25 */
 (function(){ 
 	var sanityjs = {};
 
@@ -148,38 +148,49 @@
 	}
 
 	function error(message, options) {
-		// if options is set, options is object, throw_exception is defined && throw_exception is false
-		if (!isUndefined(options) && isObject(options) && !isUndefined(options.throw_exception) && !options.throw_exception) {
-			// if verbose is undefined or verbose is true
-			if (isUndefined(options.verbose) || (!isUndefined(options.verbose) && options.verbose))
-				// log the message
-				console.log(message);
-		}
-		// if options is not set or options is not an object or throw_exception is unset or throw_exception is true
-		else {
-			// throw exception
+		if( options.throw_exception )
 			throw new TypeError(message);
-		}
+		else if ( options.verbose )
+			console.log(message);
 	
-		// return false only called if throw_exception at false
+		// return false, only called if throw_exception at false
 		return false;
 	}
 
 	sanityjs.object_check = object_check;
 	
 	function object_check(obj, type, name, options, labels ) {
+		// if no options or bad options given, set defaults
+		if( isUndefined(options) || !isObject(options) )
+			options = {};
+		options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
+		options.verbose = isDefined(options.verbose) ? options.verbose : false;  
 	
-		if ( !isObject(type) ) 
+		// if no type or bad type given, return
+		if( isUndefined(type) || (!isObject(type) && !isString(type)) )
+			return error("Bad second parameter type. It's a mandatory argument, must be a string or an object", options);
+	
+		// if type is a string, set it as an object
+		if ( isString(type) ) 
 			type = {type:type};
 	
+		// if type is not "undefined" and obj is undefined, returns immediatly
+		// not a mandatory line, but is clearer
+		if (type.type !== "undefined" && isUndefined(obj) )
+			return error("Parameter '" + name + "' is undefined.", options);
+	
+		// if object is a string, and type isn't a string or a stringnum, then obj is a JSON
 		if( isString(obj) && type.type !=="string" && type.type !== "stringnum" ){
 			try{
 				obj = JSON.parse(obj);
-			} catch(e){}
+			}catch(e){
+				// if fails, then it's likely that a string is checked while expected to be something else
+				// if JSON parse fails while actually trying to parse a JSON, then no error will be stated
+				console.log("Warning: JSON parse of " + name + " failed. If this object wasn't intended to be a JSON then ignore this warning.");
+			}
 		}
+		
 			
-		if (type.type !== "undefined" && isUndefined(obj) )
-			return error("Parameter '" + name + "' is undefined.", options);
 	
 	
 		// if type is an object, this means it contains more checking rules
@@ -198,8 +209,8 @@
 	
 		// type.structure 		the structure of obj if obj is an object
 		// type.sub_type 		the type of the elements of obj if obj is an array
-		type.not_empty = type.not_empty || false;
-		type.full_check = type.full_check || false;
+		type.not_empty = isDefined(type.not_empty) ? type.not_empty : false;
+		type.full_check = isDefined(type.full_check) ? type.full_check : false;
 		
 		if( isUndefined( labels ) )
 			labels = {};
@@ -340,6 +351,11 @@
 	sanityjs.arguments_check = arguments_check;
 	
 	function arguments_check(argument_types, options) {
+		if( isUndefined(options) || !isObject(options) )
+			options = {};
+		options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
+		options.verbose = isDefined(options.verbose) ? options.verbose : false; 
+	
 		// get caller's arguments
 		caller_arguments = Array.prototype.slice.call(arguments.callee.caller.arguments);
 		// get caller's arguments name

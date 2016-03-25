@@ -1,18 +1,37 @@
 sanityjs.object_check = object_check;
 
 function object_check(obj, type, name, options, labels ) {
+	// if no options or bad options given, set defaults
+	if( isUndefined(options) || !isObject(options) )
+		options = {};
+	options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
+	options.verbose = isDefined(options.verbose) ? options.verbose : false;  
 
-	if ( !isObject(type) ) 
+	// if no type or bad type given, return
+	if( isUndefined(type) || (!isObject(type) && !isString(type)) )
+		return error("Bad second parameter type. It's a mandatory argument, must be a string or an object", options);
+
+	// if type is a string, set it as an object
+	if ( isString(type) ) 
 		type = {type:type};
 
+	// if type is not "undefined" and obj is undefined, returns immediatly
+	// not a mandatory line, but is clearer
+	if (type.type !== "undefined" && isUndefined(obj) )
+		return error("Parameter '" + name + "' is undefined.", options);
+
+	// if object is a string, and type isn't a string or a stringnum, then obj is a JSON
 	if( isString(obj) && type.type !=="string" && type.type !== "stringnum" ){
 		try{
 			obj = JSON.parse(obj);
-		} catch(e){}
+		}catch(e){
+			// if fails, then it's likely that a string is checked while expected to be something else
+			// if JSON parse fails while actually trying to parse a JSON, then no error will be stated
+			console.log("Warning: JSON parse of " + name + " failed. If this object wasn't intended to be a JSON then ignore this warning.");
+		}
 	}
+	
 		
-	if (type.type !== "undefined" && isUndefined(obj) )
-		return error("Parameter '" + name + "' is undefined.", options);
 
 
 	// if type is an object, this means it contains more checking rules
@@ -31,8 +50,8 @@ function object_check(obj, type, name, options, labels ) {
 
 	// type.structure 		the structure of obj if obj is an object
 	// type.sub_type 		the type of the elements of obj if obj is an array
-	type.not_empty = type.not_empty || false;
-	type.full_check = type.full_check || false;
+	type.not_empty = isDefined(type.not_empty) ? type.not_empty : false;
+	type.full_check = isDefined(type.full_check) ? type.full_check : false;
 	
 	if( isUndefined( labels ) )
 		labels = {};
