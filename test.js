@@ -339,5 +339,21 @@ assert( !sanityjs.object_check( object, structure, "object", options) );
 
 
 
+
+
+// testing arguments check
+function f1(a,b,c){
+	assert( sanityjs.arguments_check(["boolean","number","string"], options) );
+}
+f1(object.boolean, object.number, object.string);
+// testing wrong arguments check
+function f2(a,b,c){
+	assert(! sanityjs.arguments_check(["boolean","number","string"], options) );
+}
+f2(object.boolean, object.boolean, object.boolean);
+
+
+
+
 console.log("Test successfully done.");
 process.exit(0);
