@@ -372,5 +372,25 @@ f2(object.boolean, object.boolean, object.boolean);
 
 
 
+// testing API bad parameters object_check
+assert( !sanityjs.object_check( object.boolean, 1, "boolean", options) );
+assert( sanityjs.object_check( object.boolean, {type:"boolean"}, 1, options) ); // should not output an error because it should recover and print a warning
+assert( sanityjs.object_check( object.boolean, {type:"boolean"}, "boolean", options, {}) ); // good parameter
+assert( sanityjs.object_check( object.boolean, {type:"boolean"}, "boolean", options, {labels:{}, recursion_depth:0, recursion_count_warned:false}) ); // good parameter
+assert( sanityjs.object_check( object.boolean, {type:"boolean"}, "boolean", options, {labels:123, recursion_depth:"str", recursion_count_warned:123}) ); // bad types, should recover
+assert( sanityjs.object_check( object.boolean, {type:"boolean"}, "boolean", options, "str") ); // bad type, should recover
+assert( sanityjs.object_check( object.boolean, {type:"boolean"}, "boolean", options, {}, 40) ); // good parameter
+assert( sanityjs.object_check( object.boolean, {type:"boolean"}, "boolean", options, {}, "str") ); // bad type, should recover
+
+
+// testing API bad parameters arguments check
+function f1(a,b,c){
+	assert( !sanityjs.arguments_check("boolean", options) );
+}
+f1(object.boolean, object.number, object.string);
+
+
+
+
 console.log("Test successfully done.");
 process.exit(0);

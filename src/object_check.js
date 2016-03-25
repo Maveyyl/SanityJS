@@ -3,18 +3,19 @@ sanityjs.object_check = object_check;
 function object_check(obj, type, name, options, ctx, recursion_count ) {  
 	// if no type or bad type given, return
 	if( isUndefined(type) || (!isObject(type) && !isString(type)) )
-		return error("Bad second parameter type. It's a mandatory argument, must be a string or an object", options);
+		return error("Bad second parameter 'type'. It's a mandatory argument, must be a string or an object", options);
 
 	// if type is a string, set it as an object
 	if ( isString(type) ) 
 		type = {type:type};
 
-	// if type is not explicitely the type "undefined" and obj is undefined, returns immediatly
-	// not a mandatory line, but is clearer
-	if (type.type !== "undefined" && isUndefined(obj) )
-		return error("Parameter '" + name + "' is undefined.", options);
+	// checking name
+	if( isUndefined(name) || !isString(name) ){
+		warn("Bad third parameter 'name'. It should be a string. Default empty name used instead.", options);
+		name = "";
+	}
 
-	// if object is a string, and type isn't a string or a stringnum, then obj is a JSON
+	// if object is a string, and type given isn't string or stringnum, then obj is a JSON and should be parsed
 	if( isString(obj) && type.type !=="string" && type.type !== "stringnum" ){
 		try{
 			obj = JSON.parse(obj);
@@ -25,13 +26,43 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 		}
 	}
 
+	// if type is not explicitely the type "undefined" and obj is undefined, returns immediatly
+	// not a mandatory line, but is clearer
+	if (type.type !== "undefined" && isUndefined(obj) )
+		return error("Parameter '" + name + "' is undefined.", options);
 
-	// handling ctx creation and recursion count
-	ctx = ctx || {};
-	ctx.labels = ctx.labels || {};
-	ctx.recursion_depth = ctx.recursion_depth || 0;
-	ctx.recursion_count_warned = isDefined(ctx.recursion_count_warned) ? ctx.recursion_count_warned : false;
-	recursion_count = isDefined(recursion_count)? recursion_count : -1;
+
+
+	// handling ctx, ctx attributes and recursion count creation
+	if( isUndefined(ctx) || !isObject(ctx) ){
+		if(  isDefined(ctx) && !isObject(ctx) )
+			warn("Bad fifth parameter 'ctx'. It should be an object. Recovered by overwriting.", options);
+		ctx = {};
+	}
+	if( isUndefined(ctx.labels) || !isObject(ctx.labels) ){
+		if( isDefined(ctx.labels) && !isObject(ctx.labels) )
+			warn("Bad argument 'labels' of parameter 'ctx'. It should be an object. Recovered by overwriting.", options);
+		ctx.labels = {};
+	}
+	if( isUndefined(ctx.recursion_depth) || !isInteger(ctx.recursion_depth) ){
+		if( isDefined(ctx.recursion_depth) && !isObject(ctx.recursion_depth) )
+			warn("Bad argument 'recursion_depth' of parameter 'ctx'. It should be an integer. Recovered by overwriting.", options);
+		ctx.recursion_depth = 0;
+	}
+	if( isUndefined(ctx.recursion_count_warned) || !isBoolean(ctx.recursion_count_warned) ){
+		if( isDefined(ctx.recursion_count_warned) && !isBoolean(ctx.recursion_count_warned) )
+			warn("Bad argument 'recursion_count_warned' of parameter 'ctx'. It should be a boolean. Recovered by overwriting.", options);
+		ctx.recursion_count_warned = false;
+	}
+
+	if( isUndefined(recursion_count) || !isInteger(recursion_count) ){
+		if( isDefined(recursion_count) && !isInteger(recursion_count) )
+			warn("Bad sixth parameter 'recursion_count'. It should be an integer. Recovered by overwriting.", options);
+		recursion_count = -1;
+	}
+
+
+	// verifying recursion count and warning if recursion is too deep
 	recursion_count++;
 	if( recursion_count > recursion_count_warn && !ctx.recursion_count_warned ){
 		warn( "Object depth reached " + recursion_count_warn + ". Behavior beyond this depth can't be guaranteed and checker might slow down." , options);
@@ -60,6 +91,23 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 	type.not_empty = isDefined(type.not_empty) ? type.not_empty : false;
 	type.full_check = isDefined(type.full_check) ? type.full_check : false;
 	
+	// testing type parameters sanity
+	if( isDefined(type.equal) && !isArray(type.equal) )
+		return error("Bad equal parameter for object " +name+ ". It should be an array", options);
+	if( isDefined(type.not_equal) && !isArray(type.not_equal) )
+		return error("Bad not_equal parameter for object " +name+ ". It should be an array", options);
+	if( isDefined(type.cb) && !isFunction(type.cb) )
+		return error("Bad cb parameter for object " +name+ ". It should be a function", options);
+	if( isDefined(type.cb_message) && !isString(type.cb_message) )
+		return error("Bad cb_message parameter for object " +name+ ". It should be a string", options);
+	if( isDefined(type.label) && !isString(type.label) )
+		return error("Bad label parameter for object " +name+ ". It should be a string", options);
+	if( isDefined(type.length) && !isInteger(type.length) )
+		return error("Bad length parameter for object " +name+ ". It should be an integer", options);
+	if( isDefined(type.structure) && !isArray(type.structure) )
+		return error("Bad structure parameter for object " +name+ ". It should be an array", options);
+	if( isDefined(type.sub_type) && ( !isObject(type.sub_type) && !isString(type.sub_type) ) )
+		return error("Bad sub_type parameter for object " +name+ ". It should be an object", options);
 
 
 	var r;
@@ -170,7 +218,7 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 	// 	return error("Parameter '" + name + "' of value " + obj + " is not equal to " + type.equal + ".", options);
 
 	// test equality if asked
-	if (isDefined(type.equal) && isArray(type.equal) && type.equal.length !== 0) {
+	if (isDefined(type.equal) && type.equal.length !== 0) {
 		var equal = false;
 		for (i = 0; i < type.equal.length; i++) {
 			if ( isEqual(obj, type.equal[i]) )
@@ -181,15 +229,20 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 	}
 
 	// test inequality if asked
-	if (isDefined(type.not_equal) && isArray(type.not_equal) && type.not_equal.length !== 0) {
+	if (isDefined(type.not_equal) && type.not_equal.length !== 0) {
 		for (i = 0; i < type.not_equal.length; i++) {
 			if ( isEqual(obj, type.not_equal[i]) )
 				return error("Parameter '" + name + "' is equal to " + type.not_equal[i] + ", it should not.", options);
 		}
 	}
 
+	// handling labels
+	if( isDefined(type.label) )
+		ctx.labels[type.label] = obj;
+
+
 	// call cb on obj
-	if( isDefined(type.cb) && isFunction(type.cb) ){
+	if( isDefined(type.cb) ){
 		r = type.cb(obj, type, name, ctx.labels);
 		if( !r ){
 			if( isDefined(type.cb_message) )
@@ -198,10 +251,6 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 				return error("Parameter '" + name + "' failed passing the callback.", options);
 		}
 	}
-
-	// handling labels
-	if( isDefined(type.label) && isString(type.label) )
-		ctx.labels[type.label] = obj;
 
 	// logging success for first object
 	if( recursion_count === 0 && ctx.recursion_depth >= recursion_count_log )
