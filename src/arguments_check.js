@@ -6,6 +6,10 @@ function arguments_check(argument_types, options) {
 	options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
 	options.verbose = isDefined(options.verbose) ? options.verbose : false; 
 
+	// if no argument_types or bad argument_types given, returns
+	if( isUndefined(argument_types) || (!isArray(argument_types)) )
+		return error("Bad fist parameter type. It's a mandatory argument, must be an array of types.", options);
+
 	// get caller's arguments
 	caller_arguments = Array.prototype.slice.call(arguments.callee.caller.arguments);
 	// get caller's arguments name

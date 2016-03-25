@@ -174,7 +174,7 @@
 		if ( isString(type) ) 
 			type = {type:type};
 	
-		// if type is not "undefined" and obj is undefined, returns immediatly
+		// if type is not explicitely the type "undefined" and obj is undefined, returns immediatly
 		// not a mandatory line, but is clearer
 		if (type.type !== "undefined" && isUndefined(obj) )
 			return error("Parameter '" + name + "' is undefined.", options);
@@ -355,6 +355,10 @@
 			options = {};
 		options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
 		options.verbose = isDefined(options.verbose) ? options.verbose : false; 
+	
+		// if no argument_types or bad argument_types given, returns
+		if( isUndefined(argument_types) || (!isArray(argument_types)) )
+			return error("Bad fist parameter type. It's a mandatory argument, must be an array of types.", options);
 	
 		// get caller's arguments
 		caller_arguments = Array.prototype.slice.call(arguments.callee.caller.arguments);

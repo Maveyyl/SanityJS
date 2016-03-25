@@ -15,7 +15,7 @@ function object_check(obj, type, name, options, labels ) {
 	if ( isString(type) ) 
 		type = {type:type};
 
-	// if type is not "undefined" and obj is undefined, returns immediatly
+	// if type is not explicitely the type "undefined" and obj is undefined, returns immediatly
 	// not a mandatory line, but is clearer
 	if (type.type !== "undefined" && isUndefined(obj) )
 		return error("Parameter '" + name + "' is undefined.", options);
