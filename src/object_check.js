@@ -1,11 +1,6 @@
 sanityjs.object_check = object_check;
 
-function object_check(obj, type, name, options, labels ) {
-	// if no options or bad options given, set defaults
-	if( isUndefined(options) || !isObject(options) )
-		options = {};
-	options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
-	options.verbose = isDefined(options.verbose) ? options.verbose : false;  
+function object_check(obj, type, name, options, labels ) {  
 
 	// if no type or bad type given, return
 	if( isUndefined(type) || (!isObject(type) && !isString(type)) )

@@ -1,10 +1,6 @@
 sanityjs.arguments_check = arguments_check;
 
 function arguments_check(argument_types, options) {
-	if( isUndefined(options) || !isObject(options) )
-		options = {};
-	options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
-	options.verbose = isDefined(options.verbose) ? options.verbose : false; 
 
 	// if no argument_types or bad argument_types given, returns
 	if( isUndefined(argument_types) || (!isArray(argument_types)) )

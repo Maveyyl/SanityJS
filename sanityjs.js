@@ -148,6 +148,12 @@
 	}
 
 	function error(message, options) {
+	
+		if( isUndefined(options) || !isObject(options) )
+			options = {};
+		options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
+		options.verbose = isDefined(options.verbose) ? options.verbose : false; 
+	
 		if( options.throw_exception )
 			throw new TypeError(message);
 		else if ( options.verbose )
@@ -159,12 +165,7 @@
 
 	sanityjs.object_check = object_check;
 	
-	function object_check(obj, type, name, options, labels ) {
-		// if no options or bad options given, set defaults
-		if( isUndefined(options) || !isObject(options) )
-			options = {};
-		options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
-		options.verbose = isDefined(options.verbose) ? options.verbose : false;  
+	function object_check(obj, type, name, options, labels ) {  
 	
 		// if no type or bad type given, return
 		if( isUndefined(type) || (!isObject(type) && !isString(type)) )
@@ -351,10 +352,6 @@
 	sanityjs.arguments_check = arguments_check;
 	
 	function arguments_check(argument_types, options) {
-		if( isUndefined(options) || !isObject(options) )
-			options = {};
-		options.throw_exception = isDefined(options.throw_exception) ? options.throw_exception : true; 
-		options.verbose = isDefined(options.verbose) ? options.verbose : false; 
 	
 		// if no argument_types or bad argument_types given, returns
 		if( isUndefined(argument_types) || (!isArray(argument_types)) )
