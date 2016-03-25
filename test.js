@@ -24,6 +24,7 @@ var object = {
 
 	"array_fullcheck": 			[1,2,3],
 	"array_wrong_fullcheck": 	[1,2,"string"],
+	"array_long": 				[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
 
 	"NaN": 						NaN,
 	"Infinity": 				Infinity,
@@ -207,6 +208,9 @@ assert( sanityjs.object_check( object["array_fullcheck"], { type: "array", full_
 
 // testing wrong array fullcheck
 assert( !sanityjs.object_check( object["array_wrong_fullcheck"], { type: "array", full_check: true, sub_type: "number" }, "array_wrong_fullcheck", options) );
+
+// testing array fullcheck warning message
+assert( sanityjs.object_check( object["array_long"], { type: "array", full_check: true, sub_type: "number" }, "array_long", options) );
 
 
 

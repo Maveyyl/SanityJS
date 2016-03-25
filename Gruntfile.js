@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 
 	var src_files = [
+		"src/conf.js",
 		"src/utils.js",
 		"src/error.js",
 		"src/object_check.js",

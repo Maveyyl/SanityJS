@@ -22,7 +22,7 @@ function object_check(obj, type, name, options, labels ) {
 		}catch(e){
 			// if fails, then it's likely that a string is checked while expected to be something else
 			// if JSON parse fails while actually trying to parse a JSON, then no error will be stated
-			console.log("Warning: JSON parse of " + name + " failed. If this object wasn't intended to be a JSON then ignore this warning.");
+			warn("JSON parse of " + name + " failed. If this object wasn't intended to be a JSON then ignore this warning.", options);
 		}
 	}
 	
@@ -106,6 +106,8 @@ function object_check(obj, type, name, options, labels ) {
 			if (obj.length > 0 && isDefined(type.sub_type)) {
 				// if full_check is set, check all elements of array
 				if ( type.full_check && type.full_check){
+					if( obj.length > array_length_warning )
+						warn("Full check requested on the array "+name+" of length superior to " + array_length_warning +". This can cause the checker to be slow.", options);
 					for (i = 0; i < obj.length; i++){
 						if (!object_check(obj[i], type.sub_type, name+"["+i+"]", options, labels)) return false;
 						// else check only the first one
