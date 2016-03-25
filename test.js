@@ -25,6 +25,7 @@ var object = {
 	"array_fullcheck": 			[1,2,3],
 	"array_wrong_fullcheck": 	[1,2,"string"],
 	"array_long": 				[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
+	"object_long": 				{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:{o:"o"}}}}}}}}}}}}}}}}}}}}},
 
 	"NaN": 						NaN,
 	"Infinity": 				Infinity,
@@ -212,11 +213,23 @@ assert( !sanityjs.object_check( object["array_wrong_fullcheck"], { type: "array"
 // testing array fullcheck warning message
 assert( sanityjs.object_check( object["array_long"], { type: "array", full_check: true, sub_type: "number" }, "array_long", options) );
 
+// testing object recursion warning and lot messages
+structure = [{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:{type:"object",structure:[{name:"o",type:"string"}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}];
+assert( sanityjs.object_check( object["object_long"], { type: "object", structure: structure }, "object_long", options) );
+
+
+
 
 
 // testing NaN and Infinity
 assert( !sanityjs.object_check( object["NaN"], 			{ type: "number" }, 	"NaN", 			options	) );
 assert( !sanityjs.object_check( object["Infinity"], 	{ type: "number" }, 	"Infinity", 	options	) );
+
+
+
+
+
+
 
 
 // testing custom function

@@ -1,7 +1,6 @@
 sanityjs.object_check = object_check;
 
-function object_check(obj, type, name, options, labels ) {  
-
+function object_check(obj, type, name, options, ctx, recursion_count ) {  
 	// if no type or bad type given, return
 	if( isUndefined(type) || (!isObject(type) && !isString(type)) )
 		return error("Bad second parameter type. It's a mandatory argument, must be a string or an object", options);
@@ -25,8 +24,21 @@ function object_check(obj, type, name, options, labels ) {
 			warn("JSON parse of " + name + " failed. If this object wasn't intended to be a JSON then ignore this warning.", options);
 		}
 	}
-	
-		
+
+
+	// handling ctx creation and recursion count
+	ctx = ctx || {};
+	ctx.labels = ctx.labels || {};
+	ctx.recursion_depth = ctx.recursion_depth || 0;
+	ctx.recursion_count_warned = isDefined(ctx.recursion_count_warned) ? ctx.recursion_count_warned : false;
+	recursion_count = isDefined(recursion_count)? recursion_count : -1;
+	recursion_count++;
+	if( recursion_count > recursion_count_warn && !ctx.recursion_count_warned ){
+		warn( "Object depth reached " + recursion_count_warn + ". Behavior beyond this depth can't be guaranteed and checker might slow down." , options);
+		ctx.recursion_count_warned = true;
+	}
+	if( recursion_count > ctx.recursion_depth )
+		ctx.recursion_depth = recursion_count;
 
 
 	// if type is an object, this means it contains more checking rules
@@ -48,8 +60,6 @@ function object_check(obj, type, name, options, labels ) {
 	type.not_empty = isDefined(type.not_empty) ? type.not_empty : false;
 	type.full_check = isDefined(type.full_check) ? type.full_check : false;
 	
-	if( isUndefined( labels ) )
-		labels = {};
 
 
 	var r;
@@ -109,12 +119,12 @@ function object_check(obj, type, name, options, labels ) {
 					if( obj.length > array_length_warning )
 						warn("Full check requested on the array "+name+" of length superior to " + array_length_warning +". This can cause the checker to be slow.", options);
 					for (i = 0; i < obj.length; i++){
-						if (!object_check(obj[i], type.sub_type, name+"["+i+"]", options, labels)) return false;
+						if (!object_check(obj[i], type.sub_type, name+"["+i+"]", options, ctx, recursion_count)) return false;
 						// else check only the first one
 					}
 				}
 				else
-					if (!object_check(obj[0], type.sub_type, name+"[0]", options, labels)) return false;
+					if (!object_check(obj[0], type.sub_type, name+"[0]", options, ctx, recursion_count)) return false;
 			}
 
 			break;
@@ -127,7 +137,7 @@ function object_check(obj, type, name, options, labels ) {
 				// objects are described with an array of objects containing informations and structures of the fields
 				for (i = 0; i < type.structure.length; i++) {
 					// for each field, check obj of the vield
-					if (!object_check(obj[type.structure[i].name], type.structure[i].type, name + "." + type.structure[i].name, options, labels)) return false;
+					if (!object_check(obj[type.structure[i].name], type.structure[i].type, name + "." + type.structure[i].name, options, ctx, recursion_count)) return false;
 				}
 			}
 
@@ -169,7 +179,7 @@ function object_check(obj, type, name, options, labels ) {
 
 	// call cb on obj
 	if( isDefined(type.cb) && isFunction(type.cb) ){
-		r = type.cb(obj, type, name, labels);
+		r = type.cb(obj, type, name, ctx.labels);
 		if( !r ){
 			if( isDefined(type.cb_message) )
 				return error("Parameter '" + name + "' " + type.cb_message, options);
@@ -178,10 +188,13 @@ function object_check(obj, type, name, options, labels ) {
 		}
 	}
 
-
 	// handling labels
 	if( isDefined(type.label) && isString(type.label) )
-		labels[type.label] = obj;
+		ctx.labels[type.label] = obj;
+
+	// logging success for first object
+	if( recursion_count === 0 && ctx.recursion_depth >= recursion_count_log )
+		log("Object " + name + " has been successfuly checked with " + ctx.recursion_depth + " recursion depth.", options );
 
 	return true;
 }
