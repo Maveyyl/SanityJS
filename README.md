@@ -138,7 +138,7 @@ Flags that can be put in Options:
 Here is the list of all checkable properties to a given object, they are attributes of a type object
 
 * type : 		type of the object, described as a string (see CHeckable types)
-* equal : 		a value the object should be equal to, does not work with error type
+* equal : 		an array of values, the object should be equal to one of them, does not work with error type
 * not_equal : 	an array of values the object shouldn't be equal to, does not work with error type
 * not_empty : 	set to true to check if the object is empty
 
@@ -195,7 +195,7 @@ function foo(arg1, arg2, arg3){
 	var type = {
 		type: "object",
 		structure: [
-			{ name: "date", type: { type:"date" , equal: today } },
+			{ name: "date", type: { type:"date" , equal: [today] } },
 			{ name: "schedule_version", type: { type:"number", cb: cb, cb_message: "is not superior to 2" } },
 			{ name: "tasks_id" type: { type:"array", sub_type: "number", full_check: true } }
 		]

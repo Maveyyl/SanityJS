@@ -353,9 +353,20 @@
 		if (!r)
 			return error("Parameter '" + name + "' is not of the type " + type.type + ".", options);
 	
+		// // test equality if asked
+		// if (isDefined(type.equal) && !isEqual(obj, type.equal))
+		// 	return error("Parameter '" + name + "' of value " + obj + " is not equal to " + type.equal + ".", options);
+	
 		// test equality if asked
-		if (isDefined(type.equal) && !isEqual(obj, type.equal))
-			return error("Parameter '" + name + "' of value " + obj + " is not equal to " + type.equal + ".", options);
+		if (isDefined(type.equal) && isArray(type.equal) && type.equal.length !== 0) {
+			var equal = false;
+			for (i = 0; i < type.equal.length; i++) {
+				if ( isEqual(obj, type.equal[i]) )
+					equal = true;
+			}
+			if( !equal )
+				return error("Parameter '" + name + "' of value " + obj + " should be equal to one of these values: " + type.equal + ".", options);
+		}
 	
 		// test inequality if asked
 		if (isDefined(type.not_equal) && isArray(type.not_equal) && type.not_equal.length !== 0) {

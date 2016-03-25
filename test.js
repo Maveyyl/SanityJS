@@ -96,35 +96,35 @@ assert( !sanityjs.object_check( object["boolean"], 	{ type: "regexp"}, 		"boolea
 
 
 // testing equality
-assert( sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	equal: undefined }, 			"undefined", 	options) );
-assert( sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		equal: true }, 					"boolean", 		options) );
-assert( sanityjs.object_check( object["number"], 		{ type: "number", 		equal: 123 }, 					"number", 		options) );
-assert( sanityjs.object_check( object["integer"], 		{ type: "integer", 		equal: 123 }, 					"integer", 		options) );
-assert( sanityjs.object_check( object["float"], 		{ type: "float", 		equal: 123.4 }, 				"float", 		options) );
-assert( sanityjs.object_check( object["string"], 		{ type: "string",		equal: "string" }, 				"string", 		options) );
-assert( sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	equal: "123.4" }, 				"stringnum", 	options) );
-assert( sanityjs.object_check( object["array"], 		{ type: "array", 		equal: [1,2,3] }, 				"array", 		options) );
-assert( sanityjs.object_check( object["object"], 		{ type: "object", 		equal: {"a":1,"b":2} }, 		"object", 		options) );
-assert( sanityjs.object_check( object["function"], 		{ type: "function", 	equal: object["function"] }, 	"function", 	options) );
-// assert( sanityjs.object_check( object["error"], 		{ type: "error", 		equal: new Error() }, 			"error",		options) );
-assert( sanityjs.object_check( object["date"], 			{ type: "date", 		equal: object["date"] }, 		"date", 		options) );
-assert( sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		equal: /./ }, 					"regexp", 		options) );
+assert( sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	equal: [123, undefined] }, 						"undefined", 	options) );
+assert( sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		equal: [false, true] }, 						"boolean", 		options) );
+assert( sanityjs.object_check( object["number"], 		{ type: "number", 		equal: [1234, 123] }, 							"number", 		options) );
+assert( sanityjs.object_check( object["integer"], 		{ type: "integer", 		equal: [1234, 123] }, 							"integer", 		options) );
+assert( sanityjs.object_check( object["float"], 		{ type: "float", 		equal: [123.5, 123.4] }, 						"float", 		options) );
+assert( sanityjs.object_check( object["string"], 		{ type: "string",		equal: ["s1", "string"] }, 						"string", 		options) );
+assert( sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	equal: ["123.5", "123.4"] }, 					"stringnum", 	options) );
+assert( sanityjs.object_check( object["array"], 		{ type: "array", 		equal: [[1,2], [1,2,3]] }, 						"array", 		options) );
+assert( sanityjs.object_check( object["object"], 		{ type: "object", 		equal: [{a:1}, {a:1,b:2}] }, 					"object", 		options) );
+assert( sanityjs.object_check( object["function"], 		{ type: "function", 	equal: [function(){}, object["function"]] }, 	"function", 	options) );
+// assert( sanityjs.object_check( object["error"], 		{ type: "error", 		equal: [new Error(), new Error()] }, 			"error",		options) );
+assert( sanityjs.object_check( object["date"], 			{ type: "date", 		equal: [new Date(), object["date"]] }, 			"date", 		options) );
+assert( sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		equal: [/../, /./] }, 							"regexp", 		options) );
 
 
 // testing wrong equality
-assert( !sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	equal: 123 }, 					"undefined", 	options) );
-assert( !sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		equal: false }, 				"boolean", 		options) );
-assert( !sanityjs.object_check( object["number"], 		{ type: "number", 		equal: 1234 }, 					"number", 		options) );
-assert( !sanityjs.object_check( object["integer"], 		{ type: "integer", 		equal: 1234 }, 					"integer", 		options) );
-assert( !sanityjs.object_check( object["float"], 		{ type: "float", 		equal: 123.45 }, 				"float", 		options) );
-assert( !sanityjs.object_check( object["string"], 		{ type: "string",		equal: "string2" }, 			"string", 		options) );
-assert( !sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	equal: "123.45" }, 				"stringnum", 	options) );
-assert( !sanityjs.object_check( object["array"], 		{ type: "array", 		equal: [1,2,3,4] }, 			"array", 		options) );
-assert( !sanityjs.object_check( object["object"], 		{ type: "object", 		equal: {"a":1,"b":2,"c":3} }, 	"object", 		options) );
-assert( !sanityjs.object_check( object["function"], 	{ type: "function", 	equal: function(){} }, 			"function", 	options) );
-// assert( !sanityjs.object_check( object["error"], 	{ type: "error", 		equal: new Error() }, 			"error",		options) );
-assert( !sanityjs.object_check( object["date"], 		{ type: "date", 		equal: new Date() }, 			"date", 		options) );
-assert( !sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		equal: /../ }, 					"regexp", 		options) );
+assert( !sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	equal: [123, 123] }, 					"undefined", 	options) );
+assert( !sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		equal: [false, false] }, 				"boolean", 		options) );
+assert( !sanityjs.object_check( object["number"], 		{ type: "number", 		equal: [1234, 12] }, 					"number", 		options) );
+assert( !sanityjs.object_check( object["integer"], 		{ type: "integer", 		equal: [1234, 12] }, 					"integer", 		options) );
+assert( !sanityjs.object_check( object["float"], 		{ type: "float", 		equal: [123.45, 123.5] }, 				"float", 		options) );
+assert( !sanityjs.object_check( object["string"], 		{ type: "string",		equal: ["string2", "s1"] }, 			"string", 		options) );
+assert( !sanityjs.object_check( object["stringnum"], 	{ type: "stringnum", 	equal: ["123.45", "123.5"] }, 			"stringnum", 	options) );
+assert( !sanityjs.object_check( object["array"], 		{ type: "array", 		equal: [[1,2,3,4], [1,2]] }, 			"array", 		options) );
+assert( !sanityjs.object_check( object["object"], 		{ type: "object", 		equal: [{a:1,b:2,c:3}, {a:1}] }, 		"object", 		options) );
+assert( !sanityjs.object_check( object["function"], 	{ type: "function", 	equal: [function(){}, function(){}] }, 	"function", 	options) );
+// assert( !sanityjs.object_check( object["error"], 	{ type: "error", 		equal: [new Error()] }, 				"error",		options) );
+assert( !sanityjs.object_check( object["date"], 		{ type: "date", 		equal: [new Date()] }, 					"date", 		options) );
+assert( !sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		equal: [/../] }, 						"regexp", 		options) );
 
 
 
