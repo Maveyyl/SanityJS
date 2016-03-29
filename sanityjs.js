@@ -1,4 +1,4 @@
-/*! sanityjs 2016-03-25 */
+/*! sanityjs 2016-03-29 */
 (function(){ 
 	var sanityjs = {};
 
@@ -189,19 +189,20 @@
 	sanityjs.object_check = object_check;
 	
 	function object_check(obj, type, name, options, ctx, recursion_count ) {  
-		// if no type or bad type given, return
-		if( isUndefined(type) || (!isObject(type) && !isString(type)) )
-			return error("Bad second parameter 'type'. It's a mandatory argument, must be a string or an object", options);
-	
-		// if type is a string, set it as an object
-		if ( isString(type) ) 
-			type = {type:type};
-	
 		// checking name
 		if( isUndefined(name) || !isString(name) ){
 			warn("Bad third parameter 'name'. It should be a string. Default empty name used instead.", options);
 			name = "";
 		}
+	
+		// if no type or bad type given, return
+		if( isUndefined(type) || (!isObject(type) && !isString(type)) )
+			return error("Bad second parameter 'type' for obj '"+name+"'. It's a mandatory argument, must be a string or an object", options);
+	
+		// if type is a string, set it as an object
+		if ( isString(type) ) 
+			type = {type:type};
+	
 	
 		// if object is a string, and type given isn't string or stringnum, then obj is a JSON and should be parsed
 		if( isString(obj) && type.type !=="string" && type.type !== "stringnum" ){

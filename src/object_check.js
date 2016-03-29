@@ -1,19 +1,20 @@
 sanityjs.object_check = object_check;
 
 function object_check(obj, type, name, options, ctx, recursion_count ) {  
+	// checking name
+	if( isUndefined(name) || !isString(name) ){
+		warn("Bad third parameter 'name' in function object_check. It should be a string. Default empty name used instead.", options);
+		name = "";
+	}
+
 	// if no type or bad type given, return
 	if( isUndefined(type) || (!isObject(type) && !isString(type)) )
-		return error("Bad second parameter 'type'. It's a mandatory argument, must be a string or an object", options);
+		return error("Bad second parameter 'type' for obj '"+name+"' in function object_check. It's a mandatory argument, must be a string or an object", options);
 
 	// if type is a string, set it as an object
 	if ( isString(type) ) 
 		type = {type:type};
 
-	// checking name
-	if( isUndefined(name) || !isString(name) ){
-		warn("Bad third parameter 'name'. It should be a string. Default empty name used instead.", options);
-		name = "";
-	}
 
 	// if object is a string, and type given isn't string or stringnum, then obj is a JSON and should be parsed
 	if( isString(obj) && type.type !=="string" && type.type !== "stringnum" ){
@@ -29,35 +30,35 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 	// if type is not explicitely the type "undefined" and obj is undefined, returns immediatly
 	// not a mandatory line, but is clearer
 	if (type.type !== "undefined" && isUndefined(obj) )
-		return error("Parameter '" + name + "' is undefined.", options);
+		return error("Object '" + name + "' is undefined.", options);
 
 
 
 	// handling ctx, ctx attributes and recursion count creation
 	if( isUndefined(ctx) || !isObject(ctx) ){
 		if(  isDefined(ctx) && !isObject(ctx) )
-			warn("Bad fifth parameter 'ctx'. It should be an object. Recovered by overwriting.", options);
+			warn("Bad fifth parameter 'ctx' for obj '"+name+"' in function object_check. It should be an object. Recovered by overwriting.", options);
 		ctx = {};
 	}
 	if( isUndefined(ctx.labels) || !isObject(ctx.labels) ){
 		if( isDefined(ctx.labels) && !isObject(ctx.labels) )
-			warn("Bad argument 'labels' of parameter 'ctx'. It should be an object. Recovered by overwriting.", options);
+			warn("Bad argument 'labels' of parameter 'ctx' for obj '"+name+"' in function object_check. It should be an object. Recovered by overwriting.", options);
 		ctx.labels = {};
 	}
 	if( isUndefined(ctx.recursion_depth) || !isInteger(ctx.recursion_depth) ){
 		if( isDefined(ctx.recursion_depth) && !isObject(ctx.recursion_depth) )
-			warn("Bad argument 'recursion_depth' of parameter 'ctx'. It should be an integer. Recovered by overwriting.", options);
+			warn("Bad argument 'recursion_depth' of parameter 'ctx' for obj '"+name+"' in function object_check. It should be an integer. Recovered by overwriting.", options);
 		ctx.recursion_depth = 0;
 	}
 	if( isUndefined(ctx.recursion_count_warned) || !isBoolean(ctx.recursion_count_warned) ){
 		if( isDefined(ctx.recursion_count_warned) && !isBoolean(ctx.recursion_count_warned) )
-			warn("Bad argument 'recursion_count_warned' of parameter 'ctx'. It should be a boolean. Recovered by overwriting.", options);
+			warn("Bad argument 'recursion_count_warned' of parameter 'ctx' for obj '"+name+"' in function object_check. It should be a boolean. Recovered by overwriting.", options);
 		ctx.recursion_count_warned = false;
 	}
 
 	if( isUndefined(recursion_count) || !isInteger(recursion_count) ){
 		if( isDefined(recursion_count) && !isInteger(recursion_count) )
-			warn("Bad sixth parameter 'recursion_count'. It should be an integer. Recovered by overwriting.", options);
+			warn("Bad sixth parameter 'recursion_count' for obj '"+name+"' in function object_check. It should be an integer. Recovered by overwriting.", options);
 		recursion_count = -1;
 	}
 
@@ -124,9 +125,9 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 			if( !r ) break;
 
 			if ( isNaN(obj) )
-				return error("Parameter " + name + " is NaN.", options);
+				return error("Object " + name + " is NaN.", options);
 			if ( !isFinite(obj) )
-				return error("Parameter " + name + " is of type " + type.type + " but is Infinite.", options);
+				return error("Object " + name + " is of type " + type.type + " but is Infinite.", options);
 			break;
 		case "integer":
 			r = isInteger(obj);
@@ -140,10 +141,10 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 
 			// if length given, test the length of the string
 			if( isDefined(type.length) && obj.length !== type.length)
-				return error("Parameter '" + name + "' of type " + type.type + " is of length " + obj.length + " but was expected to be of length " + type.length + ".", options);
+				return error("Object '" + name + "' of type " + type.type + " is of length " + obj.length + " but was expected to be of length " + type.length + ".", options);
 			// test emptyness if asked
 			if ( type.not_empty && obj.length === 0)
-				return error("Parameter '" + name + "' of type " + type.type + " is expected not to be empty.", options);
+				return error("Object '" + name + "' of type " + type.type + " is expected not to be empty.", options);
 			
 			break;
 		case "stringnum":
@@ -155,7 +156,7 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 
 			// if length given, test the length of the array
 			if (isDefined(type.length) && obj.length !== type.length)
-				return error("Parameter '" + name + "' of type " + type.type + " is of length " + obj.length + " but was expected to be of length " + type.length + ".", options);
+				return error("Object '" + name + "' of type " + type.type + " is of length " + obj.length + " but was expected to be of length " + type.length + ".", options);
 
 			if ( type.not_empty && obj.length === 0)
 				return error("Parameter '" + name + "' of type " + type.type + " is expected not to be empty.", options);
