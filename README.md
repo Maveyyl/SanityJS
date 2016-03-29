@@ -228,6 +228,7 @@ In this example we have two arrays of unknown size but we know that they must be
 
 
 ## II. Features to come
+* Possibility to Check the type of an object if it exists, but won't raise an error if object is undefined
 * Possibility to Check order with a optional comparison callback of an array
 * Possibility to have many types to check per object
 
