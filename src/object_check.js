@@ -114,6 +114,9 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 	var r;
 	var i;
 	switch (type.type) {
+		case "defined":
+			r = isDefined(obj);
+			break;
 		case "undefined":
 			r = isUndefined(obj);
 			break;

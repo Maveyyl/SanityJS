@@ -120,6 +120,7 @@ Flags that can be put in Options:
 * throw_exception : If true, all check errors will throw a TypeError exception, if false, check errors will just end the function call and return false.
 
 ### 5) Checkable types
+* defined
 * undefined
 * boolean
 * number

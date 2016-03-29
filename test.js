@@ -4,6 +4,7 @@ var assert = require("assert");
 
 var options = { "throw_exception": false, "verbose": true };
 var object = {
+	"defined": 					"defined",
 	"undefined": 				undefined,
 	"boolean": 					true,
 	"number": 					123,
@@ -30,6 +31,7 @@ var object = {
 	"NaN": 						NaN,
 	"Infinity": 				Infinity,
 
+	"array_defined":  			["defined","defined"],
 	"array_undefined":  		[undefined,undefined],
 	"array_boolean": 			[true,false],
 	"array_number": 			[1,2],
@@ -60,6 +62,7 @@ var object = {
 
 
 // testing types
+assert( sanityjs.object_check( object["defined"], 	{ type: "defined" }, 	"defined", 		options	) );
 assert( sanityjs.object_check( object["undefined"], { type: "undefined" }, 	"undefined", 	options	) );
 assert( sanityjs.object_check( object["boolean"], 	{ type: "boolean" }, 	"boolean", 		options	) );
 assert( sanityjs.object_check( object["number"], 	{ type: "number" }, 	"number", 		options	) );
@@ -75,6 +78,7 @@ assert( sanityjs.object_check( object["date"], 		{ type: "date" }, 		"date", 		o
 assert( sanityjs.object_check( object["regexp"], 	{ type: "regexp" }, 	"regexp", 		options	) );
 
 // test wrong types
+assert( !sanityjs.object_check( object["undefined"], { type: "defined"}, 	"undefined", 	options ) );
 assert( !sanityjs.object_check( object["boolean"], 	{ type: "undefined"}, 	"boolean", 	options ) );
 assert( !sanityjs.object_check( object["number"], 	{ type: "boolean"}, 	"number", 	options ) );
 assert( !sanityjs.object_check( object["boolean"], 	{ type: "number"}, 		"boolean", 	options ) );
@@ -96,6 +100,7 @@ assert( !sanityjs.object_check( object["boolean"], 	{ type: "regexp"}, 		"boolea
 
 
 // testing equality
+assert( sanityjs.object_check( object["defined"], 	{ type: "defined", 	equal: [123, "defined"] }, 						"defined", 	options) );
 assert( sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	equal: [123, undefined] }, 						"undefined", 	options) );
 assert( sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		equal: [false, true] }, 						"boolean", 		options) );
 assert( sanityjs.object_check( object["number"], 		{ type: "number", 		equal: [1234, 123] }, 							"number", 		options) );
@@ -112,6 +117,7 @@ assert( sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		equal: [/
 
 
 // testing wrong equality
+assert( !sanityjs.object_check( object["defined"], 		{ type: "defined", 	equal: [123, 123] }, 						"defined", 	options) );
 assert( !sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	equal: [123, 123] }, 					"undefined", 	options) );
 assert( !sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		equal: [false, false] }, 				"boolean", 		options) );
 assert( !sanityjs.object_check( object["number"], 		{ type: "number", 		equal: [1234, 12] }, 					"number", 		options) );
@@ -136,6 +142,7 @@ assert( !sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		equal: [
 
 
 // testing non equality
+assert( sanityjs.object_check( object["defined"], 		{ type: "defined", 		not_equal: [1,2] }, 						"defined", 		options) );
 assert( sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	not_equal: [1,2] }, 						"undefined", 	options) );
 assert( sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		not_equal: [false,false] }, 				"boolean", 		options) );
 assert( sanityjs.object_check( object["number"], 		{ type: "number", 		not_equal: [1,2] }, 						"number", 		options) );
@@ -151,6 +158,7 @@ assert( sanityjs.object_check( object["date"], 			{ type: "date", 		not_equal: [
 assert( sanityjs.object_check( object["regexp"], 		{ type: "regexp", 		not_equal: [/../,/.../] }, 					"regexp", 		options) );
 
 // testing wrong non equality
+assert( !sanityjs.object_check( object["defined"], 		{ type: "defined", 		not_equal: [123, "defined"] }, 						"defined", 	options) );
 assert( !sanityjs.object_check( object["undefined"], 	{ type: "undefined", 	not_equal: [123, undefined] }, 						"undefined", 	options) );
 assert( !sanityjs.object_check( object["boolean"], 		{ type: "boolean", 		not_equal: [false,true] }, 							"boolean", 		options) );
 assert( !sanityjs.object_check( object["number"], 		{ type: "number", 		not_equal: [1234,123] }, 							"number", 		options) );
@@ -249,6 +257,7 @@ assert( !sanityjs.object_check( object["number"], 	{ type: "number", cb: numchec
 
 
 // testing nesting check in array
+assert( sanityjs.object_check( object["array_defined"], 	{ type: "array", sub_type: "defined" }, 	"array_defined", options) );
 assert( sanityjs.object_check( object["array_undefined"], 	{ type: "array", sub_type: "undefined" }, 	"array_undefined", options) );
 assert( sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "boolean" }, 	"array_boolean", options) );
 assert( sanityjs.object_check( object["array_number"], 		{ type: "array", sub_type: "number" }, 		"array_number", options) );
@@ -265,6 +274,7 @@ assert( sanityjs.object_check( object["array_regexp"], 		{ type: "array", sub_ty
 
 
 // testing wrong nesting check in array
+assert( !sanityjs.object_check( object["array_undefined"], 	{ type: "array", sub_type: "defined" }, 	"array_undefined", options) );
 assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "undefined" }, 	"array_boolean", options) );
 assert( !sanityjs.object_check( object["array_number"], 	{ type: "array", sub_type: "boolean" }, 	"array_number", options) );
 assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_type: "number" }, 		"array_boolean", options) );
@@ -288,6 +298,7 @@ assert( !sanityjs.object_check( object["array_boolean"], 	{ type: "array", sub_t
 
 
 // testing nesting check in objects
+assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "defined", 	type: "defined" }] }, 		"object", options) );
 assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "undefined", 	type: "undefined" }] }, 	"object", options) );
 assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "boolean" }] }, 		"object", options) );
 assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "number", 	type: "number" }] }, 		"object", options) );
@@ -304,6 +315,7 @@ assert( sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "r
 
 
 // testing wrong nesting check in objects
+assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "undefined", 	type: "defined" }] }, 		"object", options) );
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "undefined" }] }, 	"object", options) );
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "number", 	type: "boolean" }] }, 		"object", options) );
 assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "boolean", 	type: "number" }] }, 		"object", options) );
