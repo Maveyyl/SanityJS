@@ -16,12 +16,15 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 		var t;
 		var nb_type = type.length;
 		var true_log_function = console.log;
+		var true_error_function = console.error;
 		var messages = "";
 		console.log = function(str){messages+=" "+str;};
+		console.error = function(str){messages+=" "+str;};
 		for(t=0;t<nb_type;t++){
 			try{
 				if( object_check(obj, type[t], name, options, ctx, recursion_count) ){
 					console.log = true_log_function;
+					console.error = true_error_function;
 					return true;
 				}
 			} catch(e){
@@ -30,6 +33,7 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 		}
 
 		console.log = true_log_function;
+		console.error = true_error_function;
 		return error(messages, options);
 	}
 
