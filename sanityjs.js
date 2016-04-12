@@ -214,15 +214,25 @@
 	sanityjs.object_check = object_check;
 	
 	function object_check(obj, type, name, options, ctx, recursion_count ) {  
-		// checking name
+		// checking name, needs to be done first because next error message exploit this value
 		if( isUndefined(name) || !isString(name) ){
 			warn("Bad third parameter 'name' in function object_check. It should be a string. Default empty name used instead.", options);
 			name = "";
 		}
 	
 		// if no type or bad type given, return
-		if( isUndefined(type) || (!isObject(type) && !isString(type)) )
+		if( isUndefined(type) || (!isObject(type) && !isString(type) && !isArray(type)) )
 			return error("Bad second parameter 'type' for obj '"+name+"' in function object_check. It's a mandatory argument, must be a string or an object", options);
+	
+		// if type is an array, we're checking many types
+		if( isArray(type) ){
+			var t;
+			var nb_type = type.length;
+			for(t=0;t<nb_type;t++)
+				if( object_check(obj, type[t], name, options, ctx, recursion_count) )
+					return true;
+			return false;
+		}
 	
 		// if type is a string, set it as an object
 		if ( isString(type) ) 

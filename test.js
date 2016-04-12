@@ -369,6 +369,46 @@ assert( !sanityjs.object_check( object, structure, "object", options) );
 
 
 
+// testing multiple type check
+// testing with one good type
+assert( sanityjs.object_check( object["defined"], 	["defined"], 	"defined", 		options	) );
+assert( sanityjs.object_check( object["undefined"], ["undefined"], 	"undefined", 	options	) );
+assert( sanityjs.object_check( object["boolean"], 	["boolean"], 	"boolean", 		options	) );
+
+// testing with one wrong type
+assert( !sanityjs.object_check( object["undefined"], 	["defined"], 	"undefined", 	options	) );
+assert( !sanityjs.object_check( object["boolean"], 		["undefined"], 	"boolean", 		options	) );
+assert( !sanityjs.object_check( object["number"], 		["boolean"], 	"number", 		options	) );
+
+// testing with one good and one wrong type
+assert( sanityjs.object_check( object["defined"], 	["defined", "undefined"], 	"defined", 		options	) );
+assert( sanityjs.object_check( object["undefined"], ["undefined", "defined"], 	"undefined", 	options	) );
+assert( sanityjs.object_check( object["boolean"], 	["boolean", "number"], 		"boolean", 		options	) );
+
+// testing with multiple wrong types
+assert( !sanityjs.object_check( object["defined"], 		["undefined", "undefined"], 	"defined", 		options	) );
+assert( !sanityjs.object_check( object["undefined"], 	["boolean", "defined"], 		"undefined", 	options	) );
+assert( !sanityjs.object_check( object["boolean"], 		["string", "number"], 			"boolean", 		options	) );
+
+// testing with multiple complex types
+assert( sanityjs.object_check( object["array_boolean"], 	[
+		{ type: "array", sub_type: "boolean" },
+		{ type: "array", sub_type: "number" }		
+	], 	"array_boolean", options) );
+assert( !sanityjs.object_check( object["array_boolean"], 	[
+		{ type: "array", sub_type: "string" },
+		{ type: "array", sub_type: "number" }		
+	], 	"array_boolean", options) );
+assert( sanityjs.object_check( object, 	[ 
+		{ type: "object", structure: [{ name: "boolean", 	type: "boolean" }] },
+		{ type: "object", structure: [{ name: "boolean", 	type: "number" }] } 
+	], 		"object", options) );
+assert( !sanityjs.object_check( object, 	[ 
+		{ type: "object", structure: [{ name: "boolean", 	type: "string" }] },
+		{ type: "object", structure: [{ name: "boolean", 	type: "number" }] } 
+	], 		"object", options) );
+
+
 
 // testing arguments check
 function f1(a,b,c){
@@ -402,7 +442,6 @@ function f1(a,b,c){
 f1(object.boolean, object.number, object.string);
 
 
-console.log(toString.call(undefined));
 
 
 console.log("Test successfully done.");
