@@ -1,4 +1,4 @@
-/*! sanityjs v1.2.0 2016-04-12 */
+/*! sanityjs v1.7.1 2016-04-12 */
 (function(){ 
 	var sanityjs = {};
 
