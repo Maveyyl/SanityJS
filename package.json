@@ -1,6 +1,6 @@
 {
   "name": "sanityjs",
-  "version": "v7.2.1",
+  "version": "v1.2.0",
   "description": "",
   "main": "sanityjs.js",
   "scripts": {
