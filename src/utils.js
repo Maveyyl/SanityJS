@@ -1,4 +1,5 @@
 
+sanityjs.toType = toCleanType;
 sanityjs.isBoolean = isBoolean;
 sanityjs.isNumber = isNumber;
 sanityjs.isInteger = isInteger;
@@ -16,21 +17,45 @@ sanityjs.isObject = isObject;
 sanityjs.isObjectEmpty = isObjectEmpty;
 sanityjs.isEqual = isEqual;
 
-function isBoolean(obj) {  return obj === true || obj === false || toString.call(obj) === '[object Boolean]'; }
-function isNumber(obj) {   return toString.call(obj) === '[object Number]'; } // positive for NaN and Infinity
-function isInteger(obj) { return  isNumber(obj) && obj % 1 === 0; } // negative for NaN and Infinity
-function isFloat(obj) { return  isNumber(obj) && obj % 1 !== 0; } // negative for NaN and Infinity
-function isString(obj) {    return toString.call(obj) === '[object String]'; }
-function isDate(obj) {    return toString.call(obj) === '[object Date]'; }
-function isRegExp(obj) {    return toString.call(obj) === '[object RegExp]'; }
-function isError(obj) {    return toString.call(obj) === '[object Error]'; }
-function isArguments(obj) {    return toString.call(obj) === '[object Arguments]'; }
-function isFunction(obj) {    return toString.call(obj) === '[object Function]'; }
-function isUndefined(obj) {    return obj === void 0; }
-function isDefined(obj) { return !isUndefined(obj); }
-function isArray(obj) {    return Array.isArray(obj); }
-function isObject(obj) {    return typeof obj === 'object' && !isArray(obj) && !!obj; }
-function isObjectEmpty(obj) {    return Object.keys(obj).length === 0; }
+
+function toCleanType(obj){
+	return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+}
+function toType(obj) {
+	return ({}).toString.call(obj);
+}
+
+function isBoolean(obj) { 		return obj === true || obj === false || toType(obj) === '[object Boolean]'; }
+function isNumber(obj) { 		return toType(obj) === '[object Number]'; } // positive for NaN and Infinity
+function isInteger(obj) { 		return isNumber(obj) && obj % 1 === 0; } // negative for NaN and Infinity
+function isFloat(obj) { 		return isNumber(obj) && obj % 1 !== 0; } // negative for NaN and Infinity
+function isString(obj) { 		return toType(obj) === '[object String]'; }
+function isDate(obj) { 			return toType(obj) === '[object Date]'; }
+function isRegExp(obj) { 		return toType(obj) === '[object RegExp]'; }
+function isError(obj) { 		return toType(obj) === '[object Error]'; }
+function isArguments(obj) { 	return toType(obj) === '[object Arguments]'; }
+function isFunction(obj) { 		return toType(obj) === '[object Function]'; }
+function isUndefined(obj) { 	return obj === void 0 || toType(obj) === '[object Undefined]' ; }
+function isDefined(obj) { 		return !isUndefined(obj); }
+function isArray(obj) { 		return Array.isArray(obj); }
+function isObject(obj) { 		return toType(obj) === '[object Object]'; }
+function isObjectEmpty(obj) { 	return Object.keys(obj).length === 0; }
+
+// function isBoolean(obj) {  return obj === true || obj === false || toString.call(obj) === '[object Boolean]'; }
+// function isNumber(obj) {   return toString.call(obj) === '[object Number]'; } // positive for NaN and Infinity
+// function isInteger(obj) { return  isNumber(obj) && obj % 1 === 0; } // negative for NaN and Infinity
+// function isFloat(obj) { return  isNumber(obj) && obj % 1 !== 0; } // negative for NaN and Infinity
+// function isString(obj) {    return toString.call(obj) === '[object String]'; }
+// function isDate(obj) {    return toString.call(obj) === '[object Date]'; }
+// function isRegExp(obj) {    return toString.call(obj) === '[object RegExp]'; }
+// function isError(obj) {    return toString.call(obj) === '[object Error]'; }
+// function isArguments(obj) {    return toString.call(obj) === '[object Arguments]'; }
+// function isFunction(obj) {    return toString.call(obj) === '[object Function]'; }
+// function isUndefined(obj) {    return obj === void 0; }
+// function isDefined(obj) { return !isUndefined(obj); }
+// function isArray(obj) {    return Array.isArray(obj); }
+// function isObject(obj) {    return typeof obj === 'object' && !isArray(obj) && !!obj; }
+// function isObjectEmpty(obj) {    return Object.keys(obj).length === 0; }
 
 
 

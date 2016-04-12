@@ -96,6 +96,8 @@ This code checks that both arg1 and arg2 are defined, and that arg1 is a string 
 
 ### 3) Util functions
 Here is the list of available util functions, their name are self-explanatory.
+* string = toType( obj )
+	Will return a string containing the simple type of obj, won't work for numer and integer because it'll just return number
 * boolean = isBoolean( obj )
 * boolean = isNumber( obj )
 * boolean = isInteger( obj )

@@ -402,6 +402,7 @@ function f1(a,b,c){
 f1(object.boolean, object.number, object.string);
 
 
+console.log(toString.call(undefined));
 
 
 console.log("Test successfully done.");
