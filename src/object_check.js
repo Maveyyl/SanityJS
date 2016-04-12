@@ -15,10 +15,22 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 	if( isArray(type) ){
 		var t;
 		var nb_type = type.length;
-		for(t=0;t<nb_type;t++)
-			if( object_check(obj, type[t], name, options, ctx, recursion_count) )
-				return true;
-		return false;
+		var true_log_function = console.log;
+		var messages = "";
+		console.log = function(str){messages+=" "+str;};
+		for(t=0;t<nb_type;t++){
+			try{
+				if( object_check(obj, type[t], name, options, ctx, recursion_count) ){
+					console.log = true_log_function;
+					return true;
+				}
+			} catch(e){
+				messages+=" "+e.message;
+			}
+		}
+
+		console.log = true_log_function;
+		return error(messages, options);
 	}
 
 	// if type is a string, set it as an object
@@ -37,10 +49,10 @@ function object_check(obj, type, name, options, ctx, recursion_count ) {
 		}
 	}
 
-	// if type is not explicitely the type "undefined" and obj is undefined, returns immediatly
-	// not a mandatory line, but is clearer
-	if (type.type !== "undefined" && isUndefined(obj) )
-		return error("Object '" + name + "' is undefined.", options);
+	// // if type is not explicitely the type "undefined" and obj is undefined, returns immediatly
+	// // not a mandatory line, but is clearer
+	// if (type.type !== "undefined" && isUndefined(obj) )
+	// 	return error("Object '" + name + "' is undefined.", options);
 
 
 
