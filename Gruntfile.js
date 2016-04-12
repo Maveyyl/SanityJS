@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 		concat: {
 			options: {
 				separator: '\n\n',
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+				banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
 				process: function(src, filepath) {
 					if( src_files.indexOf(filepath) != -1 )
 						return src.replace(/^/gm, '\t');
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
 		},
 		uglify: {
 			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+				banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
 			},
 			build: {
 				src: '<%= pkg.name %>.js',
