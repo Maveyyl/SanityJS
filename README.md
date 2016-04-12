@@ -17,6 +17,8 @@ Example:
 
 The type object can be complicated and describe the types of elements of an array or an object. This is done thanks to the  attributes "structure" and "sub_type" placed in the type object. It is then possible to describe multiple level of nested objects and arrays.
 
+The type object can also be an array of types objects to check. For example if an argument is optional but must be a string, the type object can be ["undefined","string"] or ["undefined", { type:"string", not_empty: true }]
+
 #### b) Sub Type
 A sub type is a type object, it describes the type of the elements of an array.
 Example:
