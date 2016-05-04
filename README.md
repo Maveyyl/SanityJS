@@ -99,7 +99,7 @@ This code checks that both arg1 and arg2 are defined, and that arg1 is a string 
 ### 3) Util functions
 Here is the list of available util functions, their name are self-explanatory.
 * string = toType( obj )
-	Will return a string containing the simple type of obj, won't work for numer and integer because it'll just return number
+	Will return a string containing the simple type of obj, won't work for floats and integers, it'll return "number" for both
 * boolean = isBoolean( obj )
 * boolean = isNumber( obj )
 * boolean = isInteger( obj )
@@ -142,7 +142,7 @@ Flags that can be put in Options:
 ### 6) Checkable properties
 Here is the list of all checkable properties to a given object, they are attributes of a type object
 
-* type : 		type of the object, described as a string (see CHeckable types)
+* type : 		type of the object, described as a string (see Checkable types)
 * equal : 		an array of values, the object should be equal to one of them, does not work with error type
 * not_equal : 	an array of values the object shouldn't be equal to, does not work with error type
 * not_empty : 	set to true to check if the object is empty
@@ -154,7 +154,7 @@ Here is the list of all checkable properties to a given object, they are attribu
 * length : 		what should be the length of the object if it is an array or a string
 * full_check : 	verify the type of all elements of the object if is is an array, check only first element otherwise
 
-* structure : 	the structure of the object if it is an object, must contain attributes "name" and "type"
+* structure : 	the structure of the object if it is of the type object, is an array of objects containing attributes "name" and "type"
 * sub_type : 	the type of the elements of the object if it is an array, is a type object itself
 
 Prototype of callback function
@@ -166,16 +166,18 @@ boolean = function cb(obj, type, name, labels)
 #### a) Verifying simple arguments
 ```javascript
 function foo(arg1, arg2, arg3){
+	// verify that arg1 is a string and arg2 is a number, do nothing for arg3
 	sanityjs.arguments_check(["string","number"]);
 }
 ```
 #### b) Verifying complex arguments
 ```javascript
 function foo(arg1, arg2, arg3){
+	// verify that arg1 is a non empty string, and that arg2 is an array of length 4 of non empty strings
 	sanityjs.arguments_check(
 		[
-			{type:"string", not_empty:true} ,
-			{type:"array", length:4, sub_type: { type:"string", not_empty:true}}
+			{type: "string", not_empty: true} ,
+			{type: "array", length: 4, sub_type: { type: "string", not_empty :true}}
 		]
 	);
 }
@@ -198,10 +200,14 @@ function foo(arg1, arg2, arg3){
 		return obj >= 2;
 	};
 	var type = {
+		// checked object must be an object
 		type: "object",
 		structure: [
+			// containing a field "date" of type date and equals to "today"
 			{ name: "date", type: { type:"date" , equal: [today] } },
+			// containing a field "schedule_version" of type number that must be superior to 2
 			{ name: "schedule_version", type: { type:"number", cb: cb, cb_message: "is not superior to 2" } },
+			// containing a field "task_id" of type array, all elements of that array must be numbers
 			{ name: "tasks_id" type: { type:"array", sub_type: "number", full_check: true } }
 		]
 	}
@@ -232,7 +238,7 @@ In this example we have two arrays of unknown size but we know that they must be
 
 
 ## II. Features to come
-* Possibility to Check order with a optional comparison callback of an array
+* Possibility to Check order with an optional comparison callback of an array
 
 The comparison callback would have this shape:
 ```javascript
