@@ -332,9 +332,9 @@ assert( !sanityjs.object_check( object, 	{ type: "object", structure: [{ name: "
 
 
 
-// testing giving a JSON to object_check
-assert( sanityjs.object_check( JSON.stringify(object), { type: "object", structure: [{ name: "boolean", 	type: "boolean" }] }, 	"object", options) );
-assert( !sanityjs.object_check( JSON.stringify(object), { type: "object", structure: [{ name: "boolean", 	type: "undefined" }] }, 	"object", options) );
+// // testing giving a JSON to object_check
+// assert( sanityjs.object_check( JSON.stringify(object), { type: "object", structure: [{ name: "boolean", 	type: "boolean" }] }, 	"object", options) );
+// assert( !sanityjs.object_check( JSON.stringify(object), { type: "object", structure: [{ name: "boolean", 	type: "undefined" }] }, 	"object", options) );
 // testing a non parsable string
 assert( !sanityjs.object_check( "string", { type: "object", structure: [{ name: "boolean", 	type: "undefined" }] }, 	"object", options) );
 // testing a string to be a string

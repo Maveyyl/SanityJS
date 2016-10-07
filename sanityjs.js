@@ -1,4 +1,4 @@
-/*! sanityjs v1.7.1 2016-04-12 */
+/*! sanityjs v1.7.1 2016-10-07 */
 (function(){ 
 	var sanityjs = {};
 
@@ -250,21 +250,21 @@
 			return error(messages, options);
 		}
 	
-		// if type is a string, set it as an object
+		// if type is a string, set it as an object for compatibility with the object type case
 		if ( isString(type) ) 
 			type = {type:type};
 	
 	
-		// if object is a string, and type given isn't string or stringnum, then obj is a JSON and should be parsed
-		if( isString(obj) && type.type !=="string" && type.type !== "stringnum" ){
-			try{
-				obj = JSON.parse(obj);
-			}catch(e){
-				// if fails, then it's likely that a string is checked while expected to be something else
-				// if JSON parse fails while actually trying to parse a JSON, then no error will be stated
-				warn("JSON parse of " + name + " failed. If this object wasn't intended to be a JSON then ignore this warning.", options);
-			}
-		}
+		// // if object is a string, and type given isn't string or stringnum, then obj is a JSON and should be parsed
+		// if( isString(obj) && type.type !=="string" && type.type !== "stringnum" ){
+		// 	try{
+		// 		obj = JSON.parse(obj);
+		// 	}catch(e){
+		// 		// if fails, then it's likely that a string is checked while expected to be something else
+		// 		// if JSON parse fails while actually trying to parse a JSON, then no error will be stated
+		// 		warn("JSON parse of " + name + " failed. If this object wasn't intended to be a JSON then ignore this warning.", options);
+		// 	}
+		// }
 	
 		// // if type is not explicitely the type "undefined" and obj is undefined, returns immediatly
 		// // not a mandatory line, but is clearer
