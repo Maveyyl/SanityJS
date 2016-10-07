@@ -222,7 +222,7 @@
 	
 		// if no type or bad type given, return
 		if( isUndefined(type) || (!isObject(type) && !isString(type) && !isArray(type)) )
-			return error("Bad second parameter 'type' for obj '"+name+"' in function object_check. It's a mandatory argument, must be a string or an object", options);
+			return error("Bad second parameter 'type' for obj '"+name+"' in function object_check. It's a mandatory argument, must be a string, an object or an array", options);
 	
 		// if type is an array, we're checking many types
 		if( isArray(type) ){
@@ -346,8 +346,8 @@
 			return error("Bad length parameter for object " +name+ ". It should be an integer", options);
 		if( isDefined(type.structure) && !isArray(type.structure) )
 			return error("Bad structure parameter for object " +name+ ". It should be an array", options);
-		if( isDefined(type.sub_type) && ( !isObject(type.sub_type) && !isString(type.sub_type) ) )
-			return error("Bad sub_type parameter for object " +name+ ". It should be an object", options);
+		if( isDefined(type.sub_type) && ( !isObject(type.sub_type) && !isString(type.sub_type) && !isArray(type.sub_type) ) )
+			return error("Bad sub_type parameter for object " +name+ ". It should be a string, an object or an array", options);
 	
 	
 		var r;
